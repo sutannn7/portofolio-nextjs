@@ -6,6 +6,7 @@ export interface Project {
   year: string;
   highlights: string[];
   stack: string[];
+  image?: string; // <-- baris baru
   github?: string;
   demo?: string;
 }
@@ -24,6 +25,7 @@ export const projects: Project[] = [
       "Menyelesaikan seluruh tahap pengembangan secara mandiri, mulai dari desain antarmuka hingga implementasi backend.",
     ],
     stack: ["HTML", "CSS", "PHP Native", "MySQL"],
+    // image: "/projects/polsri.jpg", // aktifkan setelah screenshot ada
     github: "https://github.com/sutannn7/web-informatika-mi-polsri",
   },
   {
@@ -38,6 +40,7 @@ export const projects: Project[] = [
       "Berkolaborasi dalam tim 4 orang dan mempublikasikan website melalui Vercel sehingga dapat diakses publik.",
     ],
     stack: ["HTML", "CSS", "JavaScript", "Vercel"],
+    image: "/projects/kopi.jpg",
     demo: "https://nusantara-kopi.vercel.app",
   },
 ];

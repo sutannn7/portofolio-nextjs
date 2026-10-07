@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, X, FolderGit2, Code2 } from "lucide-react";
 import { projects, type Project } from "@/lib/projects";
@@ -46,6 +47,19 @@ export default function ProjectsSection() {
                 whileTap={{ scale: 0.98 }}
                 className="group h-full w-full rounded-2xl border border-white/10 bg-white/5 p-6 text-left backdrop-blur transition-colors hover:border-cyan-400/40"
               >
+                {/* BLOK GAMBAR DI KARTU */}
+                {p.image && (
+                  <div className="relative mb-5 aspect-video overflow-hidden rounded-xl border border-white/10">
+                    <Image
+                      src={p.image}
+                      alt={`Tampilan ${p.title}`}
+                      fill
+                      sizes="(min-width: 768px) 40vw, 100vw"
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                )}
+
                 <div className="mb-6 flex items-start justify-between">
                   <span className="font-mono text-xs text-cyan-400">
                     0{i + 1} • {p.year}
@@ -117,6 +131,19 @@ export default function ProjectsSection() {
                     <X className="h-4 w-4" />
                   </button>
                 </div>
+
+                {/* BLOK GAMBAR DI MODAL */}
+                {selected.image && (
+                  <div className="relative mt-5 aspect-video overflow-hidden rounded-xl border border-white/10">
+                    <Image
+                      src={selected.image}
+                      alt={`Tampilan ${selected.title}`}
+                      fill
+                      sizes="(min-width: 768px) 42rem, 100vw"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                )}
 
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
