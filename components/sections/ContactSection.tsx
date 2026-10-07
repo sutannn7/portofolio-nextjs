@@ -67,7 +67,7 @@ export default function ContactSection() {
               <Phone className="h-4 w-4 shrink-0 text-cyan-400" />{" "}
               0857-5829-2876
             </a>
-            <div className="border-t border-white/10 pt-4">
+            <div className="space-y-3 border-t border-white/10 pt-4">
               <a
                 href="https://github.com/sutannn7"
                 target="_blank"
@@ -75,6 +75,15 @@ export default function ContactSection() {
                 className="flex items-center gap-3 text-sm text-cyan-400 transition-colors hover:text-cyan-300"
               >
                 <Globe className="h-4 w-4 shrink-0" /> github.com/sutannn7
+              </a>
+              <a
+                href="https://www.linkedin.com/in/sutan-akbar-dwi-nugraha-193010442"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-sm text-cyan-400 transition-colors hover:text-cyan-300"
+              >
+                <Globe className="h-4 w-4 shrink-0" /> LinkedIn: Sutan Akbar Dwi
+                Nugraha
               </a>
             </div>
           </div>
