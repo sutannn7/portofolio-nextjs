@@ -4,7 +4,9 @@ Website portofolio pribadi dengan animasi halus dan tampilan responsif.
 
 🔗 **Live:** [url-vercel-anda]
 
-![Tampilan portofolio](docs/kopi.jpg)
+<img width="1920" height="1080" alt="Screenshot (617)" src="https://github.com/user-attachments/assets/072976b6-5849-42e6-94b4-4305277e940a" />
+
+
 
 ## Fitur
 - Halaman Projects dengan kartu interaktif dan modal detail
