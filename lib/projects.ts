@@ -25,7 +25,7 @@ export const projects: Project[] = [
       "Menyelesaikan seluruh tahap pengembangan secara mandiri, mulai dari desain antarmuka hingga implementasi backend.",
     ],
     stack: ["HTML", "CSS", "PHP Native", "MySQL"],
-    // image: "/projects/polsri.jpg", // aktifkan setelah screenshot ada
+    image: "/projects/polsri.jpg",
     github: "https://github.com/sutannn7/web-informatika-mi-polsri",
   },
   {
