@@ -25,16 +25,16 @@ export const projects: Project[] = [
       "Menyelesaikan seluruh tahap pengembangan secara mandiri, mulai dari desain antarmuka hingga implementasi backend.",
     ],
     stack: ["HTML", "CSS", "PHP Native", "MySQL"],
-    image: "/projects/  ",
+    image: "/projects/polsri.jpg",
     github: "https://github.com/sutannn7/web-informatika-mi-polsri",
-    },
-    {
-      id: "kopi",
-      title: "Nusantara Kopi",
-      short:
-        "Website produk kopi hasil kerja tim 4 orang untuk event SINTAK, sudah online di Vercel.",
-      type: "Proyek Tim (4 orang) • Event SINTAK",
-      year: "2025",
+  },
+  {
+    id: "kopi",
+    title: "Nusantara Kopi",
+    short:
+      "Website produk kopi hasil kerja tim 4 orang untuk event SINTAK, sudah online di Vercel.",
+    type: "Proyek Tim (4 orang) • Event SINTAK",
+    year: "2025",
     highlights: [
       "Mendesain dan mengimplementasikan frontend website produk kopi, mencakup tata letak halaman, komponen tampilan, dan interaksi pengguna.",
       "Berkolaborasi dalam tim 4 orang dan mempublikasikan website melalui Vercel sehingga dapat diakses publik.",
