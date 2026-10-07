@@ -20,7 +20,7 @@ const roles = ["Web Developer", "Frontend Developer", "UI Enthusiast"];
 
 const stats = [
   { label: "IPK", to: 3.55, decimals: 2, suffix: " / 4.00" },
-  { label: "Proyek Utama", to: 2, decimals: 0, suffix: "" },
+  { label: "Project", to: 2, decimals: 0, suffix: "" },
   { label: "Juara 1 PUBG Mobile", to: 1, decimals: 0, suffix: "st" },
 ];
 
@@ -100,7 +100,7 @@ export default function HomeSection({ setActiveSection }: HomeSectionProps) {
             onClick={() => setActiveSection("projects")}
             className="group flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black shadow-[0_0_30px_rgba(34,211,238,0.25)]"
           >
-            Lihat Proyek
+            Lihat Project
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
         </Magnetic>
