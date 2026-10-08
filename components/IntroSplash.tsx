@@ -129,7 +129,7 @@ export default function IntroSplash() {
           {/* Garis cahaya di tengah saat terbelah */}
           <motion.div
             aria-hidden
-            className="absolute inset-x-0 top-1/2 h-px bg-cyan-400 shadow-[0_0_30px_6px_rgba(34,211,238,0.8)]"
+            className="absolute inset-x-0 top-1/2 h-px bg-emerald-500 shadow-[0_0_20px_4px_rgba(16,185,129,0.5)]"
             initial={{ scaleX: 0, opacity: 0 }}
             exit={{
               scaleX: [0, 1, 1],
@@ -158,14 +158,14 @@ export default function IntroSplash() {
             />
             <motion.div
               aria-hidden
-              className="pointer-events-none absolute h-112 w-md rounded-full bg-cyan-500/20 blur-3xl"
+              className="pointer-events-none absolute h-112 w-md rounded-full bg-emerald-900/15 blur-3xl"
               initial={{ scale: 0.4, opacity: 0 }}
               animate={{ scale: [0.4, 1.2, 1], opacity: 1 }}
               transition={{ duration: 2.6, ease }}
             />
 
             {/* Terminal */}
-            <div className="relative mb-10 h-20 w-full max-w-md font-mono text-[11px] leading-6 text-cyan-400/90 md:text-sm">
+            <div className="relative mb-10 h-20 w-full max-w-md font-mono text-[11px] leading-6 text-emerald-400/70 md:text-sm">
               {BOOT.slice(0, lines).map((l, i) => (
                 <motion.p
                   key={l}
@@ -173,12 +173,12 @@ export default function IntroSplash() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3 }}
                   className={
-                    i === lines - 1 ? "text-cyan-300" : "text-cyan-400/50"
+                    i === lines - 1 ? "text-emerald-300" : "text-emerald-400/40"
                   }
                 >
                   {l}
                   {i === lines - 1 && !decoded && (
-                    <span className="ml-1 inline-block h-3.5 w-1.5 animate-pulse bg-cyan-300 align-middle" />
+                    <span className="ml-1 inline-block h-3.5 w-1.5 animate-pulse bg-emerald-300 align-middle" />
                   )}
                 </motion.p>
               ))}
@@ -186,11 +186,11 @@ export default function IntroSplash() {
 
             {/* Nama (decode) */}
             <div
-              className="relative flex flex-col items-center text-4xl font-extrabold leading-none tracking-tight md:text-7xl"
+              className="relative flex flex-col items-center font-heading text-4xl font-bold leading-none tracking-tight md:text-6xl"
               aria-label="Sutan Akbar Dwi Nugraha"
             >
-              <p className="font-mono text-white">{n1 || "\u00A0"}</p>
-              <p className="mt-2 bg-linear-to-r from-cyan-400 to-blue-500 bg-clip-text font-mono text-transparent">
+              <p className="text-white">{n1 || "\u00A0"}</p>
+              <p className="mt-2 text-emerald-400">
                 {n2 || "\u00A0"}
               </p>
             </div>
@@ -199,34 +199,34 @@ export default function IntroSplash() {
               initial={{ opacity: 0, y: 10 }}
               animate={decoded ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, ease }}
-              className="relative mt-6 text-center text-xs tracking-[0.3em] text-gray-400 md:text-sm"
+              className="relative mt-6 text-center text-xs tracking-[0.3em] text-neutral-400 md:text-sm"
             >
               WEB DEVELOPER · POLSRI
             </motion.p>
 
             {/* Counter */}
             <div className="absolute inset-x-6 bottom-8 flex items-end justify-between md:inset-x-12 md:bottom-12">
-              <div className="text-xs tracking-widest text-gray-500">
+              <div className="text-xs tracking-widest text-neutral-400">
                 PORTFOLIO V2.0
               </div>
               <div className="flex items-baseline gap-1 font-mono text-5xl font-bold text-white md:text-7xl">
                 <motion.span>{rounded}</motion.span>
-                <span className="text-xl text-cyan-400">%</span>
+                <span className="text-xl text-emerald-400">%</span>
               </div>
             </div>
 
             {/* Skip */}
             <button
               onClick={finish}
-              className="absolute right-6 top-6 rounded-full border border-white/15 px-4 py-1.5 text-xs tracking-widest text-gray-400 transition-colors hover:border-cyan-400/60 hover:text-white md:right-12 md:top-10"
+              className="absolute right-6 top-6 rounded-full border border-neutral-700 px-4 py-1.5 text-xs tracking-widest text-neutral-400 transition-colors hover:border-emerald-500/50 hover:text-white md:right-12 md:top-10"
             >
               SKIP →
             </button>
 
             {/* Progress bar */}
-            <div className="absolute inset-x-0 bottom-0 h-0.75 bg-white/5">
+            <div className="absolute inset-x-0 bottom-0 h-0.5 bg-neutral-800">
               <motion.div
-                className="h-full origin-left bg-linear-to-r from-cyan-400 to-blue-500"
+                className="h-full origin-left bg-emerald-500"
                 style={{ scaleX: progress }}
               />
             </div>

@@ -26,7 +26,7 @@ export default function TechMarquee() {
               key={idx}
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-800 text-gray-300"
             >
-              <span className="w-2 h-2 rounded-full bg-cyan-400" />
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
               {tech}
             </div>
           ))}

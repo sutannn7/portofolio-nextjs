@@ -24,7 +24,7 @@ export default function TiltCard({
   const rotateX = useTransform(spy, [0, 1], [10, -10]);
   const gx = useTransform(spx, (v) => `${v * 100}%`);
   const gy = useTransform(spy, (v) => `${v * 100}%`);
-  const glare = useMotionTemplate`radial-gradient(260px circle at ${gx} ${gy}, rgba(34,211,238,0.18), transparent 60%)`;
+  const glare = useMotionTemplate`radial-gradient(260px circle at ${gx} ${gy}, rgba(16,185,129,0.08), transparent 60%)`;
 
   const onMove = (e: React.PointerEvent) => {
     const r = ref.current?.getBoundingClientRect();

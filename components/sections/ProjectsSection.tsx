@@ -26,10 +26,8 @@ export default function ProjectsSection() {
   return (
     <section className="pb-12 xl:pr-72">
       <PageHeader
-        index="03"
         title="Projects"
         subtitle="Klik kartu untuk melihat detail proyek."
-        icon={<FolderGit2 className="h-4 w-4" />}
       />
 
       <motion.div
@@ -45,11 +43,11 @@ export default function ProjectsSection() {
                 layoutId={`card-${p.id}`}
                 onClick={() => setSelected(p)}
                 whileTap={{ scale: 0.98 }}
-                className="group h-full w-full rounded-2xl border border-white/10 bg-white/5 p-6 text-left backdrop-blur transition-colors hover:border-cyan-400/40"
+                className="group h-full w-full rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6 text-left backdrop-blur transition-colors hover:border-neutral-700"
               >
                 {/* BLOK GAMBAR DI KARTU */}
                 {p.image && (
-                  <div className="relative mb-5 aspect-video overflow-hidden rounded-xl border border-white/10">
+                  <div className="relative mb-5 aspect-video overflow-hidden rounded-xl border border-neutral-800">
                     <Image
                       src={p.image}
                       alt={`Tampilan ${p.title}`}
@@ -61,10 +59,10 @@ export default function ProjectsSection() {
                 )}
 
                 <div className="mb-6 flex items-start justify-between">
-                  <span className="font-mono text-xs text-cyan-400">
+                  <span className="font-mono text-xs text-neutral-400">
                     0{i + 1} • {p.year}
                   </span>
-                  <ArrowUpRight className="h-5 w-5 text-gray-500 transition-all group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-cyan-400" />
+                  <ArrowUpRight className="h-5 w-5 text-neutral-500 transition-all group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-neutral-300" />
                 </div>
                 <motion.h3
                   layoutId={`title-${p.id}`}
@@ -72,13 +70,13 @@ export default function ProjectsSection() {
                 >
                   {p.title}
                 </motion.h3>
-                <p className="mt-1 text-xs text-cyan-400/80">{p.type}</p>
-                <p className="mt-3 text-sm text-gray-400">{p.short}</p>
+                <p className="mt-1 text-xs text-neutral-400">{p.type}</p>
+                <p className="mt-3 max-w-prose text-sm leading-relaxed text-neutral-400">{p.short}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {p.stack.map((s) => (
                     <span
                       key={s}
-                      className="rounded-full bg-white/10 px-2.5 py-1 text-[11px] text-gray-300"
+                      className="rounded-full border border-neutral-800 bg-neutral-800 px-2.5 py-1 text-[11px] text-neutral-300"
                     >
                       {s}
                     </span>
@@ -119,7 +117,7 @@ export default function ProjectsSection() {
                     >
                       {selected.title}
                     </motion.h3>
-                    <p className="mt-1 text-sm text-cyan-400">
+                    <p className="mt-1 text-sm text-neutral-400">
                       {selected.type} • {selected.year}
                     </p>
                   </div>
@@ -134,7 +132,7 @@ export default function ProjectsSection() {
 
                 {/* BLOK GAMBAR DI MODAL */}
                 {selected.image && (
-                  <div className="relative mt-5 aspect-video overflow-hidden rounded-xl border border-white/10">
+                  <div className="relative mt-5 aspect-video overflow-hidden rounded-xl border border-neutral-800">
                     <Image
                       src={selected.image}
                       alt={`Tampilan ${selected.title}`}
@@ -153,29 +151,29 @@ export default function ProjectsSection() {
                     transition: { delay: 0.2, duration: 0.5, ease },
                   }}
                 >
-                  <p className="mb-2 mt-6 text-xs tracking-widest text-gray-500">
+                  <p className="mb-2 mt-6 text-xs tracking-widest text-neutral-500">
                     YANG SAYA KERJAKAN
                   </p>
                   <ul className="space-y-3">
                     {selected.highlights.map((h) => (
                       <li
                         key={h}
-                        className="flex gap-3 text-sm leading-relaxed text-gray-300"
+                        className="flex gap-3 text-sm leading-relaxed text-neutral-300"
                       >
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
                         {h}
                       </li>
                     ))}
                   </ul>
 
-                  <p className="mb-2 mt-6 text-xs tracking-widest text-gray-500">
+                  <p className="mb-2 mt-6 text-xs tracking-widest text-neutral-500">
                     TECH STACK
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {selected.stack.map((s) => (
                       <span
                         key={s}
-                        className="rounded-full border border-cyan-400/20 bg-cyan-400/5 px-3 py-1 text-xs text-cyan-300"
+                        className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-300"
                       >
                         {s}
                       </span>
@@ -188,7 +186,7 @@ export default function ProjectsSection() {
                         href={selected.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black"
+                        className="flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-neutral-950 transition-colors hover:bg-emerald-400"
                       >
                         Live Demo <ArrowUpRight className="h-4 w-4" />
                       </a>
@@ -198,14 +196,14 @@ export default function ProjectsSection() {
                         href={selected.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm text-white transition-colors hover:border-cyan-400/60"
+                        className="flex items-center gap-2 rounded-full border border-neutral-700 bg-neutral-900 px-5 py-2.5 text-sm text-neutral-100 transition-colors hover:border-neutral-600"
                       >
                         <Code2 className="h-4 w-4" /> GitHub
                       </a>
                     )}
                     <button
                       onClick={() => setSelected(null)}
-                      className="rounded-full px-5 py-2.5 text-sm text-gray-400 hover:text-white"
+                      className="rounded-full px-5 py-2.5 text-sm text-neutral-400 hover:text-white"
                     >
                       Tutup
                     </button>

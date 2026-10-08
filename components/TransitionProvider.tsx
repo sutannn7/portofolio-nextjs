@@ -107,13 +107,13 @@ export default function TransitionProvider({
           animate={{ opacity: cover ? 1 : 0 }}
           transition={{ duration: 0.35, delay: cover ? 0.35 : 0 }}
         >
-          <p className="mb-3 text-[10px] tracking-[0.4em] text-cyan-400">
+          <p className="mb-3 text-[10px] tracking-[0.4em] text-emerald-400">
             MENUJU
           </p>
-          <p className="bg-linear-to-r from-cyan-400 to-blue-500 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent md:text-6xl">
+          <p className="font-heading text-4xl font-bold tracking-tight text-white md:text-5xl">
             {label}
           </p>
-          <div className="mt-6 h-px w-24 bg-linear-to-r from-transparent via-cyan-400 to-transparent" />
+          <div className="mt-6 h-px w-24 bg-emerald-500/60" />
         </motion.div>
       </div>
     </TransitionCtx.Provider>

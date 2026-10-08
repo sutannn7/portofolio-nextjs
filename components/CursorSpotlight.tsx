@@ -13,7 +13,7 @@ export default function CursorSpotlight() {
   const y = useMotionValue(-500);
   const sx = useSpring(x, { stiffness: 150, damping: 20, mass: 0.4 });
   const sy = useSpring(y, { stiffness: 150, damping: 20, mass: 0.4 });
-  const background = useMotionTemplate`radial-gradient(500px circle at ${sx}px ${sy}px, rgba(34,211,238,0.12), transparent 60%)`;
+  const background = useMotionTemplate`radial-gradient(500px circle at ${sx}px ${sy}px, rgba(16,185,129,0.06), transparent 60%)`;
 
   useEffect(() => {
     if (!window.matchMedia("(pointer: fine)").matches) return;

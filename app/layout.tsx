@@ -1,8 +1,21 @@
 import type { Metadata } from "next";
+import { Sora, DM_Sans } from "next/font/google";
 import "./globals.css";
 import MotionProvider from "@/components/MotionProvider";
 import TransitionProvider from "@/components/TransitionProvider";
 import Shell from "@/components/Shell";
+
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-sora",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Sutan Akbar - Portfolio",
@@ -16,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id">
-      <body className="bg-neutral-950 text-gray-200 antialiased">
+    <html lang="id" className={`${sora.variable} ${dmSans.variable}`}>
+      <body className="bg-neutral-950 font-sans text-neutral-100 antialiased selection:bg-emerald-500/20 selection:text-white">
         <MotionProvider>
           <TransitionProvider>
             <Shell />

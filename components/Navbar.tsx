@@ -26,7 +26,7 @@ export default function Navbar() {
   return (
     <>
       {/* Desktop */}
-      <nav className="fixed left-1/2 top-5 z-50 hidden -translate-x-1/2 rounded-full border border-white/10 bg-black/40 p-1 backdrop-blur-xl md:flex">
+      <nav className="fixed left-1/2 top-5 z-50 hidden -translate-x-1/2 rounded-full border border-neutral-800 bg-neutral-900/80 p-1 backdrop-blur-xl md:flex">
         {TABS.map((t) => {
           const active = pathname === t.href;
           return (
@@ -35,13 +35,15 @@ export default function Navbar() {
               href={t.href}
               onClick={(e) => onClick(e, t.href)}
               className={`relative px-5 py-2 text-sm transition-colors ${
-                active ? "text-white" : "text-white/60 hover:text-white"
+                active
+                  ? "text-white"
+                  : "text-neutral-400 hover:text-white"
               }`}
             >
               {active && (
                 <motion.span
                   layoutId="nav-pill"
-                  className="absolute inset-0 rounded-full bg-white/10"
+                  className="absolute inset-0 rounded-full border border-neutral-700/60 bg-neutral-800"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
@@ -53,7 +55,7 @@ export default function Navbar() {
 
       {/* Mobile */}
       <nav
-        className="fixed inset-x-3 bottom-3 z-50 flex rounded-2xl border border-white/10 bg-black/60 p-1.5 backdrop-blur-xl md:hidden"
+        className="fixed inset-x-3 bottom-3 z-50 flex rounded-2xl border border-neutral-800 bg-neutral-900/90 p-1.5 backdrop-blur-xl md:hidden"
         style={{ paddingBottom: "max(0.375rem, env(safe-area-inset-bottom))" }}
       >
         {TABS.map((t) => {
@@ -64,13 +66,13 @@ export default function Navbar() {
               href={t.href}
               onClick={(e) => onClick(e, t.href)}
               className={`relative flex-1 py-2.5 text-center text-[11px] ${
-                active ? "text-white" : "text-white/60"
+                active ? "text-emerald-400" : "text-neutral-400"
               }`}
             >
               {active && (
                 <motion.span
                   layoutId="nav-pill-m"
-                  className="absolute inset-0 rounded-xl bg-white/15"
+                  className="absolute inset-0 rounded-xl border border-neutral-700/60 bg-neutral-800"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
