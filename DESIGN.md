@@ -1,7 +1,8 @@
 # DESIGN.md — Portofolio Sutan Akbar
 
-> Versi: 2.0 | Tanggal: 2026-10-10
+> Versi: 2.1 (Jalur B: palet pastel + gerak tambahan) | Tanggal: 2026-10-10
 > Stack: Next.js + Tailwind CSS
+> Struktur: situs multi-halaman (/, /about, /experience, /projects, /contact)
 > Target: Rekruter & dosen (waktu baca ~30 detik per halaman)
 > Sumber inspirasi: https://typesomething.co/ (prinsip saja, bukan salinan)
 > Prototype acuan utama: Figma attached (desktop & mobile)
@@ -13,8 +14,8 @@
 1. **Tipografi sebagai hierarki utama.** Judul pakai bobot reguler (400) dengan letter-spacing sangat rapat; ukuran saja yang membedakan level. Tidak pakai bold, kapital, atau warna berbeda untuk judul section.
 2. **Ruang napas cukup.** Kontainer max 72rem, padding vertikal section clamp(4rem, 8vw, 7rem), gap kartu 1.5rem. Setiap blok konten punya jarak yang terasa lega.
 3. **Kartu putih di atas krem.** Surface putih (#FFFFFF) dengan radius besar (24px) di atas latar krem (#EFEAE9). Border 1px line opsional tapi disarankan.
-4. **Aksen sangat terbatas.** Hanya dua warna non-netral: highlight pink (#FFC7D8) untuk latar kecil & titik status, dan dark card untuk CTA block. Dilarang menambahkan warna aksen lain.
-5. **Motion hanya fungsional.** Fade dan slide-up 8–12px, 200–300ms, hormati `prefers-reduced-motion`. Tidak ada animasi dekoratif.
+4. **Aksen terbatas pada palet pastel.** Warna non-netral yang diizinkan hanya: highlight pink (#FFC7D8), mint (#CDEBD8), sky (#CFE2FF), butter (#FFEBA8), plus dark card (ink) untuk CTA block dan signal lime (#C8FF12) khusus titik status. Pastel hanya sebagai LATAR, tidak pernah sebagai warna teks atau ikon. Dilarang menambahkan warna lain di luar daftar ini.
+5. **Motion halus dan bermakna.** Reveal fade + slide-up 8–12px, 200–300ms, hormati `prefers-reduced-motion`. Efek tambahan hanya yang tercantum di §7.5. Tidak ada animasi dekoratif di luar daftar itu.
 
 ---
 
@@ -29,48 +30,51 @@
 | White pada ink (CTA gelap) | `#FFFFFF` | `#171313` | **15.5:1** | AAA ✓ |
 | Ink pada putih (kartu) | `#171313` | `#FFFFFF` | **15.5:1** | AAA ✓ |
 | Ink-muted pada putih | `rgba(23,19,19,.72)` | `#FFFFFF` | **10.8:1** | AAA ✓ |
+| Ink pada mint | `#171313` | `#CDEBD8` | **14.5:1** | AAA ✓ |
+| Ink pada sky | `#171313` | `#CFE2FF` | **14.0:1** | AAA ✓ |
+| Ink pada butter | `#171313` | `#FFEBA8` | **15.5:1** | AAA ✓ |
+| Ink pada pink | `#171313` | `#FFC7D8` | **12.7:1** | AAA ✓ |
+| Ink-muted pada pastel (mint/sky/butter/pink) | `rgba(23,19,19,.72)` | pastel | **6.1–6.8:1** | AA ✓ (bukan AAA) |
 | **Lime pada krem** ⚠️ | `#C8FF12` | `#EFEAE9` | **~1.1:1** | FAIL ✗ |
 
-> **DILARANG** menggunakan `#C8FF12` untuk teks atau ikon. Lime hanya boleh sebagai titik status kecil di dalam pill (diameter ~6px) karena berfungsi sebagai penanda visual, bukan bacaan.
-> **Catatan Figma:** Titik status pada prototype tampak berwarna pink/salmon (`#FFC7D8`). Ikuti Figma untuk titik status.
+> **DILARANG** menggunakan `#C8FF12` untuk teks atau ikon. Lime hanya boleh sebagai titik status kecil (diameter ~6–8px) karena berfungsi sebagai penanda visual, bukan bacaan. Class Tailwind-nya `bg-signal`.
+> **Catatan Figma:** Titik status pada prototype Figma tampak pink (`#FFC7D8`), sedangkan implementasi saat ini memakai lime (`bg-signal`) di pill Hero dan Footer. Kedua-duanya diizinkan untuk titik status; jangan dicampur dalam satu halaman.
+> **Teks di atas pastel:** pakai `text-ink` penuh. `text-ink-muted` boleh untuk teks besar/isi sekunder (rasio 6.1–6.8:1, lulus AA).
 
-### CSS Variables (app/globals.css)
+### Token (app/globals.css, Tailwind v4)
+
+Nilai warna ditulis SEKALI di blok `@theme` dan otomatis menjadi class utility
+(`bg-bg`, `bg-surface`, `text-ink`, `text-ink-muted`, `border-line`, `bg-highlight`,
+`bg-mint`, `bg-sky`, `bg-butter`, `bg-signal`). Tidak ada mode gelap.
 
 ```css
-:root {
-  /* Latar & surface */
+@theme {
   --color-bg: #EFEAE9;
   --color-surface: #FFFFFF;
-  --color-highlight: #FFC7D8; /* pink lembut, latar kecil & titik status */
-
-  /* Teks */
   --color-ink: #171313;
   --color-ink-muted: rgba(23, 19, 19, 0.72);
   --color-line: rgba(23, 19, 19, 0.2);
 
-  /* Status & aksen */
-  --color-accent-lime: #C8FF12; /* TITIK STATUS SAJA, BUKAN TEKS */
-  --color-white: #FFFFFF;
+  /* Pastel: LATAR saja, satu per kartu/bagian */
+  --color-highlight: #FFC7D8;
+  --color-mint: #CDEBD8;
+  --color-sky: #CFE2FF;
+  --color-butter: #FFEBA8;
+
+  /* Titik status saja, BUKAN teks/ikon */
+  --color-signal: #C8FF12;
+
+  --radius-card: 24px;
+  --radius-pill: 999px;
+  --radius-skill: 12px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #1a1616;
-    --color-surface: #252020;
-    --color-ink: #F5F0EF;
-    --color-ink-muted: rgba(245, 240, 239, 0.72);
-    --color-line: rgba(245, 240, 239, 0.15);
-  }
-}
-
-html {
-  color-scheme: light;
-}
+html { color-scheme: light; }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-ink);
-  font-family: 'Montserrat', system-ui, sans-serif;
+  font-family: var(--font-montserrat), system-ui, sans-serif;
 }
 ```
 
@@ -107,24 +111,21 @@ body {
 
 | State | Deskripsi |
 |---|---|
-| **Default** | Logo "Sutan Akbar." (kiri, ink, bobot 400, ukuran ~1rem). Navigasi centered (Home, About, Experience, Projects, Contact) — link teks ink-muted, ukuran 0.875rem, hover: opacity 0.7. Tombol "Mari terhubung" (kanan) — pill gelap, teks putih, bobot 600, ukuran 0.78rem. Fixed top, backdrop-blur, border-b tipis. |
+| **Default** | Logo "Sutan Akbar." (kiri, ink, bobot 400, ukuran ~1rem). Navigasi centered (Home, About, Experience, Projects, Contact) — link teks ink-muted (halaman aktif: ink), ukuran 0.875rem, hover: opacity 0.7. Tombol "Mari terhubung" (kanan) — pill gelap, teks putih, bobot 600, ukuran 0.78rem. Fixed top, backdrop-blur, border-b tipis. |
 | **Hover** | Link nav: opacity 0.7. Tombol CTA: scale 1.02, opacity naik. |
 | **Focus** | Ring tipis 2px ink di sekeliling link/tombol, offset 2px. |
 | **Disabled** | Tidak ada link disabled di navbar. |
 
 ```tsx
-// Struktur
-<nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/90 backdrop-blur-sm border-b border-[var(--color-line)]">
-  <div class="container-custom py-3 flex items-center justify-between">
-    <a href="/" class="text-[var(--color-ink)] font-[400] text-[0.9375rem] tracking-[-0.02em]">Sutan Akbar.</a>
-    <ul class="hidden md:flex items-center gap-6">
-      <li><a href="#home" class="text-[var(--color-ink-muted)] text-[0.875rem] hover:opacity-70 transition-opacity">Home</a></li>
-      {/* About, Experience, Projects, Contact */}
-    </ul>
-    <a href="#contact" class="inline-flex items-center px-4 py-2 rounded-[999px] bg-[var(--color-ink)] text-[var(--color-white)] text-[0.78rem] font-[600] hover:scale-[1.02] transition-transform focus:outline-none focus:ring-2 focus:ring-[var(--color-ink)] focus:ring-offset-2">
-      Mari terhubung
-    </a>
-  </div>
+// Struktur (implementasi saat ini: components/Navbar.tsx)
+// - Tautan memakai next/link ke rute: /, /about, /experience, /projects, /contact
+// - Menu halaman aktif: text-ink; lainnya: text-ink-muted (usePathname)
+// - Layar < md: menu desktop disembunyikan, diganti satu baris menu yang bisa digeser
+<nav className="fixed left-0 right-0 top-0 z-50 border-b border-line bg-bg/90 backdrop-blur-sm">
+  ...
+  <Link href="/contact" className="rounded-pill bg-ink px-4 py-2 text-label font-semibold text-surface ...">
+    Mari terhubung
+  </Link>
 </nav>
 ```
 
@@ -178,11 +179,11 @@ body {
 
 | State | Style |
 |---|---|
-| **Default** | `bg-[var(--color-surface)] rounded-[24px] p-6 border border-[var(--color-line)]` |
+| **Default** | `rounded-[24px] p-6 sm:p-8` dengan latar pastel (kartu 01 `bg-mint`, 02 `bg-sky`, 03 `bg-butter`), tanpa border. Teks `text-ink`. |
 | **Nomor** | `text-[var(--color-ink-muted)] text-[0.78rem] font-[600] tracking-wider mb-3` (format: "01", "02", "03") |
 | **Judul** | `text-[var(--color-ink)] text-[1.2rem] font-[400] leading-[1.5] mb-2` |
 | **Isi** | `text-[var(--color-ink-muted)] text-[1.0625rem] leading-[1.6] max-w-[65ch]` |
-| **Hover** | `border-[var(--color-ink-muted)]` |
+| **Hover** | `hover:-translate-y-1` (naik 4px, tanpa shadow), `transition-transform duration-300 ease-out` |
 | **Focus** | `outline-none ring-2 ring-[var(--color-ink)] ring-offset-2 ring-offset-[var(--color-bg)] rounded-[24px]` |
 | **Disabled** | `opacity-50 cursor-not-allowed` |
 
@@ -194,6 +195,22 @@ body {
 | **Item skill** | `bg-[var(--color-surface)] rounded-[12px] px-4 py-3 text-center border border-[var(--color-line)] text-[var(--color-ink)] text-[0.875rem] font-[400]` |
 | **Hover** | `border-[var(--color-ink-muted)] bg-[var(--color-bg)]` |
 | **Focus** | `outline-none ring-2 ring-[var(--color-ink)] ring-offset-1 rounded-[12px]` |
+
+### 5.7 Kartu Pastel
+
+Kartu atau bagian berlatar pastel (mint, sky, butter, highlight) untuk memberi warna tanpa menambah elemen dekoratif.
+
+| Aturan | Style |
+|---|---|
+| Latar | Satu pastel per kartu/bagian. Tidak digabung, tidak digradasi. |
+| Teks | `text-ink` (judul dan isi). Pastel tidak pernah jadi warna teks/ikon. |
+| Bentuk | `rounded-3xl` (24px), tanpa border, tanpa shadow. |
+| Hover | `hover:-translate-y-1 transition-transform duration-300 ease-out` |
+| Pill kecil | `rounded-pill bg-highlight px-3 py-1 text-label text-ink` (atau pastel lain) |
+
+### 5.8 Blok CTA Gelap
+
+`bg-ink` dengan teks `text-bg`/`text-surface`, `rounded-3xl`, padding besar. Tombol utama di dalamnya berupa pill `bg-highlight text-ink`; tombol sekunder `border border-surface/30 text-surface`.
 
 ### Kontainer
 
@@ -231,24 +248,23 @@ padding-block: clamp(4rem, 8vw, 7rem);
 
 ## 6. Rancangan Tiap Halaman
 
-### 6.1 Home (`/`)
+### 6.1 Peta Halaman
 
-Single-page scroll dengan锚点 navigasi dari navbar.
+Situs multi-halaman. Navigasi memakai `next/link`, bukan anchor `#`.
 
-| Area | Konten | Catatan |
-|---|---|---|
-| **Hero** | h1 singkat ("Sutan Akbar."), pill status "Open to work", paragraf body max-w-[65ch], CTA ganda (primary + secondary) | Gradien radial lembut di latar belakang hero (opsional, dari referensi). Tidak ada gambar portrait. |
-| **About** | h2 "About", 2–3 paragraf body, grid skill di bawahnya | Skill grid: 3 kolom mobile, 6 kolom desktop. |
-| **Experience** | h2 "Experience", timeline vertikal (carta langkah bernomor 01–03) | Timeline hanya teks + nomor; tanpa garis penghubung visual berlebihan. |
-| **Projects** | h2 "Projects", grid kartu project 2 kolom (desktop) / 1 kolom (mobile) | Setiap kartu: gambar aspect-[16/10] + judul h3 + deskripsi + tag tech. |
-| **Contact** | h2 "Contact", form sederhana (nama, email, pesan) + CTA | Form tanpa validasi rumit; submit → `mailto:` atau endpoint placeholder. |
-| **Footer** | copyright, link ke social (GitHub, LinkedIn) | Minimalis, tanpa elemen dekoratif. |
+| Rute | Isi |
+|---|---|
+| `/` | Hero (pill status, h1, deskripsi, 2 tombol, statistik) → Project pilihan → Cara saya bekerja (3 kartu pastel) → Ajakan kontak + Download CV → Footer |
+| `/about` | Ringkasan, pendidikan, keterampilan (kartu per kelompok + pill), soft skill, prestasi |
+| `/experience` | Timeline vertikal: garis polos `bg-line`, ikon dalam lingkaran putih, kartu per item |
+| `/projects` | Grid 2 kolom kartu project; klik membuka modal detail (Esc/klik latar untuk menutup) |
+| `/contact` | Info kontak + form (Formspree), label eksplisit per input |
 
-> **Flow baca optimal:** Hero → About → Experience → Projects → Contact. Jangan sisipkan section di luar urutan ini.
-
-### 6.2 Halaman Tambahan (jika ada)
-
-Saat ini target hanya single-page. Jika nanti dibuat halaman terpisah (mis. `/project/[slug]`), pertahankan skema warna, tipografi, dan kartu project yang sama.
+Aturan umum halaman dalam:
+- Judul halaman memakai `PageHeader` (h1, bobot 400, tanpa garis dekoratif).
+- Konten dibungkus `mx-auto max-w-6xl px-6`, jarak atas cukup untuk navbar fixed (`pt-32`; di HP perlu lebih besar karena navbar dua baris).
+- Data project hanya dari `lib/projects.ts` (satu sumber untuk Home dan /projects).
+- Footer: copyright (tahun ditulis manual karena Cache Components melarang `new Date()` di komponen server) dan titik status.
 
 ---
 
@@ -304,7 +320,7 @@ useEffect(() => {
 | Elemen | Transition |
 |---|---|
 | Tombol | `transition-opacity duration-200 hover:opacity-90 hover:scale-[1.02]` |
-| Kartu project / langkah | `transition-transform duration-200 hover:-translate-y-0.5 hover:border-[var(--color-ink-muted)]` |
+| Kartu project / langkah / pastel | `transition-transform duration-300 ease-out hover:-translate-y-1` (naik 4px, tanpa shadow) |
 | Link nav | `transition-opacity duration-200 hover:opacity-70` |
 | Item skill grid | `transition-colors duration-200 hover:bg-[var(--color-bg)] hover:border-[var(--color-ink-muted)]` |
 
@@ -321,6 +337,23 @@ className={`reveal ${visible ? 'visible' : ''} ${visible ? `style="transition-de
 
 ---
 
+### 7.5 Efek Tambahan yang Diizinkan (Jalur B)
+
+| Efek | Aturan |
+|---|---|
+| Reveal bergantian (stagger) | 60–80ms per item, `Reveal` (fade + geser 10px, 250ms) |
+| Hover kartu | Naik 4px, tanpa shadow, 300ms |
+| Hover gambar project | Zoom maksimal `scale-105` di dalam bingkai `overflow-hidden`, 300–400ms |
+| Hover tombol | Ganti warna isi (ink → highlight) atau opacity, 200ms |
+| Angka statistik Hero | Hitung naik dari 0, sekali saat terlihat, maksimal 1 detik |
+| Transisi antarhalaman | Fade pendek, maksimal 250ms |
+| Scroll progress | Garis tipis `bg-ink` di atas halaman |
+
+Semua efek di atas wajib mati pada `prefers-reduced-motion: reduce` (§8.5).
+Marquee/teks berjalan BELUM disetujui; tambahkan ke tabel ini dulu sebelum dibuat.
+
+---
+
 ## 8. Aksesibilitas
 
 ### 8.1 Kontras Warna
@@ -332,7 +365,7 @@ Semua pasangan teks/latar harus mencapai **WCAG AA (4.5:1)** atau lebih tinggi. 
 | `text-[var(--color-ink)]` | Teks utama — rasio 15.5:1 (AAA) |
 | `text-[var(--color-ink-muted)]` | Teks sekunder — rasio 10.8:1 (AAA) |
 | `text-[var(--color-white)]` pada background ink | CTA gelap — rasio 15.5:1 (AAA) |
-| ⚠️ `text-[var(--color-accent-lime)]` | **DILARANG** untuk teks (rasio ~1.1:1, FAIL) |
+| ⚠️ `text-signal` (lime `#C8FF12`) | **DILARANG** untuk teks (rasio ~1.1:1, FAIL) |
 
 ### 8.2 Focus Visible
 
@@ -412,8 +445,9 @@ Setiap `<img>` wajib memiliki `alt` yang deskriptif. Gambar dekoratif gunakan `a
 | Larangan | Alasan |
 |---|---|
 | Menggunakan `#C8FF12` (lime) untuk teks atau ikon | Kontras ~1.1:1, tidak readable |
-| Menambahkan warna aksen baru (biru, hijau, ungu, dll) | Melanggar prinsip §1 poin 4 |
-| Menggunakan pink/salmon (`#FFC7D8`) untuk teks | Hanya untuk latar kecil dan titik status |
+| Menambahkan warna di luar palet (ink, krem, putih, highlight, mint, sky, butter, signal) | Melanggar prinsip §1 poin 4 |
+| Memakai pastel (mint/sky/butter/highlight) untuk teks atau ikon | Kontras rendah; pastel hanya latar |
+| Menggabung dua pastel dalam satu kartu atau menggradasikannya | Menjaga tampilan tetap tenang |
 
 ### 9.2 Tipografi
 
@@ -431,6 +465,11 @@ Setiap `<img>` wajib memiliki `alt` yang deskriptif. Gambar dekoratif gunakan `a
 | Animasi dekoratif (floating, spinning, pulse tanpa fungsi) | Melanggar prinsip §1 poin 5 |
 | Transition pada `padding`, `width`, `height` | Menyebabkan layout shift |
 | Durasi > 400ms | Terlalu lambat untuk UX |
+| Gradient text, glow/neon, efek grid atau spotlight | Dekoratif, mengganggu keterbacaan |
+| Cursor spotlight, efek tilt/miring pada kartu | Dekoratif |
+| Efek mengetik (typewriter), intro splash, animated background | Dekoratif, memperlambat |
+| Label kecil huruf kapital di atas judul (eyebrow) | Hierarki harus dari ukuran |
+| Shadow berat | Desain flat sesuai referensi |
 | Tidak menghormati `prefers-reduced-motion` | Aksesibilitas |
 
 ### 9.4 Komponen & Layout
@@ -454,9 +493,10 @@ Setiap `<img>` wajib memiliki `alt` yang deskriptif. Gambar dekoratif gunakan `a
 
 | Larangan | Alasan |
 |---|---|
-| Hardcode warna hex tanpa menggunakan CSS variable | Sulit maintain, tidak support dark mode |
+| Hardcode warna hex di komponen (selalu pakai class token) | Sulit dirawat |
 | Menggunakan `!important` secara sembarangan | Specificity conflict |
-| Menambahkan library animasi eksternal (Framer Motion, GSAP) tanpa izin | Berat bundle, berlebihan untuk pola sederhana |
+| Menambahkan library animasi baru (GSAP, dll) tanpa izin | Berat bundle, berlebihan untuk pola sederhana |
+| Memakai Framer Motion di luar `Reveal`, modal Projects, form Contact, dan `ScrollProgress` | Library ini sudah terpasang; pemakaiannya dibatasi di komponen tersebut |
 
 ---
 
@@ -466,13 +506,15 @@ Setiap `<img>` wajib memiliki `alt` yang deskriptif. Gambar dekoratif gunakan `a
 
 - [ ] Semua teks menggunakan `--color-ink` atau `--color-ink-muted`
 - [ ] Tidak ada teks berwarna `#C8FF12` (lime)
-- [ ] Titik status pill menggunakan `--color-highlight` (pink), bukan lime
-- [ ] CSS variable digunakan untuk semua warna (tidak ada hardcode hex)
-- [ ] Dark mode variables terdefinisi di `@media (prefers-color-scheme: dark)`
+- [ ] Titik status memakai `bg-signal` (lime) atau `bg-highlight` (pink), tidak dicampur dalam satu halaman
+- [ ] Warna memakai class token (`bg-mint`, `text-ink`, dst.), tidak ada hardcode hex
+- [ ] Tidak ada blok `prefers-color-scheme: dark` (situs hanya mode terang)
+- [ ] Pastel hanya dipakai sebagai latar; teks di atasnya `text-ink`
+- [ ] Satu pastel per kartu/bagian, tanpa gradien
 
 ### 10.2 Tipografi
 
-- [ ] FontMontserrat digunakan untuk semua teks (via `next/font/google`)
+- [ ] Font Montserrat digunakan untuk semua teks (via `next/font/google`)
 - [ ] Tidak ada font lain yang diimpor
 - [ ] Judul section menggunakan bobot 400, bukan bold
 - [ ] Letter-spacing judul negatif (`-0.055em`, `-0.02em`, `-0.01em`)
@@ -504,7 +546,7 @@ Setiap `<img>` wajib memiliki `alt` yang deskriptif. Gambar dekoratif gunakan `a
 
 ### 10.6 Motion
 
-- [ ] Scroll-reveal menggunakan IntersectionObserver
+- [ ] Scroll-reveal memakai komponen `Reveal` (whileInView, sekali jalan)
 - [ ] Durasi 200–300ms dengan ease-out
 - [ ] `prefers-reduced-motion: reduce` dinonaktifkan
 - [ ] Tidak ada transition pada padding/width/height
@@ -521,11 +563,10 @@ Setiap `<img>` wajib memiliki `alt` yang deskriptif. Gambar dekoratif gunakan `a
 
 ### 10.8 DILARANG — Review Akhir
 
-- [ ] Tidak ada warna aksen baru selain pink dan ink
+- [ ] Tidak ada warna di luar palet §1 poin 4
 - [ ] Tidak ada shadow pada kartu
 - [ ] Tidak ada animasi dekoratif
 - [ ] Tidak ada teks dari typesomething.co
-- [ ] Tidak ada library animasi eksternal
-- [ ] Urutan section: Hero → About → Experience → Projects → Contact
-
-| Menambahkan library animasi eksternal (Framer Motion, GSAP) tanpa izin | Berat bundle, berlebihan untuk pola sederhana |
+- [ ] Tidak ada library animasi baru (Framer Motion hanya di komponen yang diizinkan §9.6)
+- [ ] Tautan navigasi memakai `Link` ke rute, bukan `#anchor`
+- [ ] Tidak ada gradient text, glow, spotlight, tilt, efek mengetik
