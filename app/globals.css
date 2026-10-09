@@ -21,13 +21,14 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #1a1616;
-    --color-surface: #252020;
-    --color-ink: #F5F0EF;
-    --color-ink-muted: rgba(245, 240, 239, 0.72);
-    --color-line: rgba(245, 240, 239, 0.15);
-  }
+  ::root {
+  --color-bg: #EFEAE9;
+  --color-surface: #FFFFFF;
+  --color-ink: #171313;
+  --color-ink-muted: rgba(23, 19, 19, 0.72);
+  --color-line: rgba(23, 19, 19, 0.2);
+  --color-highlight: #FFC7D8;
+}
 }
 
 html {
