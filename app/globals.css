@@ -13,6 +13,9 @@
   --color-ink-muted: rgba(23, 19, 19, 0.72);
   --color-line: rgba(23, 19, 19, 0.2);
   --color-highlight: #FFC7D8; /* latar kecil saja */
+  --color-mint: #CDEBD8;
+  --color-sky: #CFE2FF;
+  --color-butter: #FFEBA8;
   --color-signal: #C8FF12;    /* TITIK STATUS SAJA, BUKAN TEKS */
 
   /* Radius */
