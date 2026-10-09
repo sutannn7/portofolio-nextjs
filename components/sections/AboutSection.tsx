@@ -51,6 +51,7 @@ const card = "rounded-3xl bg-surface p-8";
 const pill =
   "rounded-pill border border-line px-3 py-1 text-label text-ink-muted";
 const sectionTitle = "flex items-center gap-3 text-h2 text-ink";
+const tones = ["bg-mint", "bg-sky", "bg-butter", "bg-highlight"];
 
 export default function AboutSection() {
   return (
@@ -115,13 +116,18 @@ export default function AboutSection() {
           </h2>
         </Reveal>
         <div className="grid gap-6 sm:grid-cols-2">
-          {skills.map((g) => (
-            <Reveal key={g.title} className="h-full">
-              <div className={`${card} h-full`}>
+          {skills.map((g, i) => (
+            <Reveal key={g.title} delay={(i % 2) * 0.07} className="h-full">
+              <div
+                className={`${tones[i % tones.length]} h-full rounded-3xl p-8 transition-transform duration-300 ease-out hover:-translate-y-1`}
+              >
                 <p className="mb-4 text-h3 text-ink">{g.title}</p>
                 <div className="flex flex-wrap gap-2">
                   {g.items.map((s) => (
-                    <span key={s} className={pill}>
+                    <span
+                      key={s}
+                      className="rounded-pill border border-line px-3 py-1 text-label text-ink"
+                    >
                       {s}
                     </span>
                   ))}
