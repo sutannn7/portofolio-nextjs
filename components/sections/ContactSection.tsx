@@ -2,13 +2,15 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, MapPin, Phone, Globe, Send } from "lucide-react";
-import PageHeader from "@/components/PageHeader";
 import Reveal from "@/components/Reveal";
 
 type Status = "idle" | "sending" | "ok" | "error";
 
 const field =
-  "w-full rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3 text-white placeholder:text-neutral-500 outline-none transition-colors focus:border-emerald-500/60";
+  "w-full rounded-skill border border-line bg-bg px-4 py-3 text-ink placeholder:text-ink-muted outline-none transition-colors focus:border-ink";
+
+const linkClass =
+  "flex items-center gap-3 text-body text-ink-muted transition-colors hover:text-ink";
 
 export default function ContactSection() {
   const [status, setStatus] = useState<Status>("idle");
@@ -35,42 +37,33 @@ export default function ContactSection() {
   }
 
   return (
-    <div className="pb-12 xl:pr-72">
-      <PageHeader
-        title="Contact Me"
-        subtitle="Punya tawaran magang, proyek, atau ingin berkolaborasi? Hubungi saya melalui kontak di bawah ini."
-      />
+    <div className="mx-auto w-full max-w-6xl px-6 pb-16 pt-12">
+      <h1 className="text-h1 text-ink">Hubungi saya</h1>
+      <p className="mt-4 max-w-xl text-body text-ink-muted">
+        Punya tawaran magang, proyek, atau ingin berkolaborasi? Hubungi saya
+        melalui kontak di bawah ini.
+      </p>
 
-      <div className="grid gap-6 md:grid-cols-[1fr_1.6fr]">
+      <div className="mt-12 grid gap-6 md:grid-cols-[1fr_1.6fr]">
         <Reveal from="left" delay={0.1}>
-          <div className="h-full space-y-4 rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6 backdrop-blur">
-            <h3 className="text-lg font-semibold text-white">
-              Informasi Kontak
-            </h3>
-            <p className="flex items-center gap-3 text-sm text-neutral-300">
-              <MapPin className="h-4 w-4 shrink-0 text-neutral-400" /> Palembang,
-              Sumatera Selatan
+          <div className="h-full space-y-4 rounded-3xl bg-surface p-8">
+            <h3 className="text-h3 font-semibold text-ink">Informasi Kontak</h3>
+            <p className="flex items-center gap-3 text-body text-ink-muted">
+              <MapPin className="h-4 w-4 shrink-0" /> Palembang, Sumatera
+              Selatan
             </p>
-            <a
-              href="mailto:Akbarcool998@gmail.com"
-              className="flex items-center gap-3 text-sm text-neutral-300 transition-colors hover:text-white"
-            >
-              <Mail className="h-4 w-4 shrink-0 text-neutral-400" />{" "}
-              Akbarcool998@gmail.com
+            <a href="mailto:Akbarcool998@gmail.com" className={linkClass}>
+              <Mail className="h-4 w-4 shrink-0" /> Akbarcool998@gmail.com
             </a>
-            <a
-              href="tel:+6285758292876"
-              className="flex items-center gap-3 text-sm text-neutral-300 transition-colors hover:text-white"
-            >
-              <Phone className="h-4 w-4 shrink-0 text-neutral-400" />{" "}
-              0857-5829-2876
+            <a href="tel:+6285758292876" className={linkClass}>
+              <Phone className="h-4 w-4 shrink-0" /> 0857-5829-2876
             </a>
-            <div className="space-y-3 border-t border-neutral-800 pt-4">
+            <div className="space-y-3 border-t border-line pt-4">
               <a
                 href="https://github.com/sutannn7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm text-neutral-300 transition-colors hover:text-white"
+                className={linkClass}
               >
                 <Globe className="h-4 w-4 shrink-0" /> github.com/sutannn7
               </a>
@@ -78,7 +71,7 @@ export default function ContactSection() {
                 href="https://www.linkedin.com/in/sutan-akbar-dwi-nugraha-193010442"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm text-neutral-300 transition-colors hover:text-white"
+                className={linkClass}
               >
                 <Globe className="h-4 w-4 shrink-0" /> LinkedIn: Sutan Akbar Dwi
                 Nugraha
@@ -90,12 +83,12 @@ export default function ContactSection() {
         <Reveal from="right" delay={0.2}>
           <form
             onSubmit={onSubmit}
-            className="space-y-4 rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6 backdrop-blur"
+            className="space-y-4 rounded-3xl bg-surface p-8"
           >
             <div>
               <label
                 htmlFor="name"
-                className="mb-1.5 block text-sm text-neutral-300"
+                className="mb-1.5 block text-label font-semibold text-ink"
               >
                 Nama Anda
               </label>
@@ -110,7 +103,7 @@ export default function ContactSection() {
             <div>
               <label
                 htmlFor="email"
-                className="mb-1.5 block text-sm text-neutral-300"
+                className="mb-1.5 block text-label font-semibold text-ink"
               >
                 Email Anda
               </label>
@@ -126,7 +119,7 @@ export default function ContactSection() {
             <div>
               <label
                 htmlFor="message"
-                className="mb-1.5 block text-sm text-neutral-300"
+                className="mb-1.5 block text-label font-semibold text-ink"
               >
                 Pesan
               </label>
@@ -141,10 +134,11 @@ export default function ContactSection() {
             </div>
 
             <button
+              type="submit"
               disabled={status === "sending"}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 py-3 font-semibold text-neutral-950 transition-colors hover:bg-emerald-400 disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-2 rounded-pill bg-ink py-3 text-label font-semibold text-surface transition-opacity hover:opacity-85 disabled:opacity-50"
             >
-              {status === "sending" ? "Mengirim…" : "Kirim Pesan"}
+              {status === "sending" ? "Mengirim..." : "Kirim Pesan"}
               <Send className="h-4 w-4" />
             </button>
 
@@ -155,7 +149,7 @@ export default function ContactSection() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="text-center text-sm text-emerald-400"
+                  className="rounded-skill bg-highlight px-4 py-3 text-center text-label text-ink"
                 >
                   Terkirim! Terima kasih, saya akan segera membalas.
                 </motion.p>
@@ -166,7 +160,7 @@ export default function ContactSection() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="text-center text-sm text-red-400"
+                  className="text-center text-label text-ink"
                 >
                   Gagal mengirim, coba lagi.
                 </motion.p>
