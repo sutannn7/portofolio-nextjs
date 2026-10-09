@@ -1,7 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
 import ScrollProgress from "./ScrollProgress";
-import BadgeLanyard from "./BadgeLanyard";
 import Navbar from "./Navbar";
 
 export default function Shell() {
@@ -13,7 +12,6 @@ export default function Shell() {
 
       {isHome && (
         <div className="hidden xl:block">
-          <BadgeLanyard />
         </div>
       )}
       <Navbar />
