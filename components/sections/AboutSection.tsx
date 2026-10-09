@@ -54,7 +54,7 @@ const sectionTitle = "flex items-center gap-3 text-h2 text-ink";
 
 export default function AboutSection() {
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-16 px-6 pb-16 pt-12">
+    <div className="mx-auto w-full max-w-6xl space-y-16 px-6 pb-16 pt-32">
       <PageHeader
         title="About Me"
         subtitle="Ringkasan profesional dan latar belakang akademis saya."
