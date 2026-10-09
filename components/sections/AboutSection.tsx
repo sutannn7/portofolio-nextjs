@@ -47,17 +47,22 @@ const softSkills = [
   "Bertanggung jawab",
 ];
 
+const card = "rounded-3xl bg-surface p-8";
+const pill =
+  "rounded-pill border border-line px-3 py-1 text-label text-ink-muted";
+const sectionTitle = "flex items-center gap-3 text-h2 text-ink";
+
 export default function AboutSection() {
   return (
-    <div className="space-y-12 pb-12 text-neutral-200 xl:pr-72">
+    <div className="mx-auto w-full max-w-6xl space-y-16 px-6 pb-16 pt-12">
       <PageHeader
         title="About Me"
         subtitle="Ringkasan profesional dan latar belakang akademis saya."
       />
 
-      <Reveal delay={0.1}>
-        <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6 backdrop-blur">
-          <p className="max-w-[65ch] text-pretty leading-relaxed text-neutral-300">
+      <Reveal>
+        <div className={card}>
+          <p className="max-w-[65ch] text-pretty text-body text-ink-muted">
             Mahasiswa semester 5 D-IV Manajemen Informatika Politeknik Negeri
             Sriwijaya dengan dasar yang baik di pengembangan web (HTML, CSS,
             PHP, MySQL), pengembangan aplikasi Android, analisis sistem, dan
@@ -70,62 +75,53 @@ export default function AboutSection() {
         </div>
       </Reveal>
 
-      <section className="space-y-4">
-        <Reveal delay={0.15}>
-          <h3 className="flex items-center gap-2 text-xl font-semibold text-white">
-            <GraduationCap className="h-6 w-6 text-emerald-400" /> Pendidikan
-          </h3>
+      <section className="space-y-6">
+        <Reveal>
+          <h2 className={sectionTitle}>
+            <GraduationCap className="h-6 w-6" /> Pendidikan
+          </h2>
         </Reveal>
-        <Reveal delay={0.2} from="left">
-          <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-5">
+        <Reveal>
+          <div className={card}>
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <p className="font-medium text-white">
-                D-IV Manajemen Informatika
-              </p>
-              <span className="font-mono text-xs text-neutral-400">
-                2024 – Sekarang
-              </span>
+              <p className="text-h3 text-ink">D-IV Manajemen Informatika</p>
+              <span className="text-label text-ink-muted">2024 – Sekarang</span>
             </div>
-            <p className="text-sm text-neutral-400">
+            <p className="mt-1 text-body text-ink-muted">
               Politeknik Negeri Sriwijaya, Palembang
             </p>
-            <p className="mt-2 text-sm font-medium text-emerald-400">
+            <p className="mt-4 inline-block rounded-pill bg-highlight px-3 py-1 text-label font-semibold text-ink">
               IPK 3,55 / 4,00 (hingga Semester 4)
             </p>
           </div>
         </Reveal>
-        <Reveal delay={0.25} from="left">
-          <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-5">
+        <Reveal>
+          <div className={card}>
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <p className="font-medium text-white">SMA Negeri 10 Palembang</p>
-              <span className="font-mono text-xs text-neutral-400">
-                2021 – 2024
-              </span>
+              <p className="text-h3 text-ink">SMA Negeri 10 Palembang</p>
+              <span className="text-label text-ink-muted">2021 – 2024</span>
             </div>
-            <p className="text-sm text-neutral-400">
+            <p className="mt-1 text-body text-ink-muted">
               Jurusan Ilmu Pengetahuan Alam (IPA)
             </p>
           </div>
         </Reveal>
       </section>
 
-      <section className="space-y-4">
-        <Reveal delay={0.1}>
-          <h3 className="flex items-center gap-2 text-xl font-semibold text-white">
-            <Cpu className="h-6 w-6 text-emerald-400" /> Keterampilan
-          </h3>
+      <section className="space-y-6">
+        <Reveal>
+          <h2 className={sectionTitle}>
+            <Cpu className="h-6 w-6" /> Keterampilan
+          </h2>
         </Reveal>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {skills.map((g, i) => (
-            <Reveal key={g.title} delay={0.1 + (i % 2) * 0.1}>
-              <div className="h-full rounded-2xl border border-neutral-800 bg-neutral-900/40 p-5 transition-colors hover:border-neutral-700">
-                <p className="mb-3 font-medium text-white">{g.title}</p>
+        <div className="grid gap-6 sm:grid-cols-2">
+          {skills.map((g) => (
+            <Reveal key={g.title} className="h-full">
+              <div className={`${card} h-full`}>
+                <p className="mb-4 text-h3 text-ink">{g.title}</p>
                 <div className="flex flex-wrap gap-2">
                   {g.items.map((s) => (
-                    <span
-                      key={s}
-                      className="rounded-full border border-neutral-800 bg-neutral-800 px-3 py-1 text-xs text-neutral-300"
-                    >
+                    <span key={s} className={pill}>
                       {s}
                     </span>
                   ))}
@@ -134,44 +130,44 @@ export default function AboutSection() {
             </Reveal>
           ))}
         </div>
-        <Reveal delay={0.1}>
-          <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-5">
-            <p className="mb-3 font-medium text-white">Soft Skill</p>
+        <Reveal>
+          <div className={card}>
+            <p className="mb-4 text-h3 text-ink">Soft Skill</p>
             <div className="flex flex-wrap gap-2">
               {softSkills.map((s) => (
                 <span
                   key={s}
-                  className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-300"
+                  className="rounded-pill bg-highlight px-3 py-1 text-label text-ink"
                 >
                   {s}
                 </span>
               ))}
             </div>
-            <p className="mt-4 text-sm text-neutral-400">
+            <p className="mt-6 text-body text-ink-muted">
               Bahasa: Indonesia (aktif), Inggris (pasif)
             </p>
           </div>
         </Reveal>
       </section>
 
-      <section className="space-y-4">
+      <section className="space-y-6">
         <Reveal>
-          <h3 className="flex items-center gap-2 text-xl font-semibold text-white">
-            <Award className="h-6 w-6 text-emerald-400" /> Prestasi
-          </h3>
+          <h2 className={sectionTitle}>
+            <Award className="h-6 w-6" /> Prestasi
+          </h2>
         </Reveal>
-        <Reveal delay={0.1} from="right">
-          <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-5">
+        <Reveal>
+          <div className={card}>
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <p className="font-medium text-white">
+              <p className="text-h3 text-ink">
                 Juara 1 Lomba E-Sport PUBG Mobile
               </p>
-              <span className="font-mono text-xs text-neutral-400">2022</span>
+              <span className="text-label text-ink-muted">2022</span>
             </div>
-            <p className="text-sm text-neutral-400">
+            <p className="mt-1 text-body text-ink-muted">
               MADAGASCAR (HUT RI ke-77), OSIS SMA Negeri 10 Palembang
             </p>
-            <p className="mt-2 max-w-[65ch] text-pretty text-sm leading-relaxed text-neutral-300">
+            <p className="mt-4 max-w-[65ch] text-pretty text-body text-ink-muted">
               Memimpin tim sebagai ketua tim (in-game leader) dalam menyusun
               strategi dan membagi peran hingga meraih juara 1.
             </p>
