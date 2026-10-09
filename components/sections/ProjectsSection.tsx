@@ -37,7 +37,7 @@ export default function ProjectsSection() {
           <Reveal key={p.id} className="h-full">
             <button
               onClick={() => setSelected(p)}
-              className="group h-full w-full rounded-3xl bg-surface p-6 text-left transition-opacity hover:opacity-90"
+              className="group h-full w-full rounded-3xl bg-surface p-6 text-left transition-transform duration-300 ease-out hover:-translate-y-1"
             >
               {p.image && (
                 <div className="relative mb-6 aspect-video overflow-hidden rounded-2xl">
@@ -46,7 +46,7 @@ export default function ProjectsSection() {
                     alt={`Tampilan ${p.title}`}
                     fill
                     sizes="(min-width: 768px) 40vw, 100vw"
-                    className="object-cover object-top"
+                    className="object-cover object-top transition-transform duration-300 ease-out group-hover:scale-105"
                   />
                 </div>
               )}

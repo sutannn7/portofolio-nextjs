@@ -28,16 +28,16 @@ export default function ProjectsPreview() {
           {projects.map((p) => (
             <li
               key={p.id}
-              className="flex flex-col overflow-hidden rounded-3xl border border-line bg-surface"
+              className="group flex flex-col overflow-hidden rounded-3xl border border-line bg-surface transition-transform duration-300 ease-out hover:-translate-y-1"
             >
-              <div className="relative aspect-[16/10] w-full bg-bg">
+              <div className="relative aspect-[16/10] w-full bg-bg overflow-hidden">
                 {p.image && (
                   <Image
                     src={p.image}
                     alt={`Tampilan website ${p.title}`}
                     fill
                     sizes="(min-width: 768px) 560px, 100vw"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                   />
                 )}
               </div>
