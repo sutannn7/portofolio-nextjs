@@ -159,6 +159,8 @@ body {
 | **Focus** | `outline-none ring-2 ring-[var(--color-ink)] ring-offset-1` |
 | **Disabled** | `opacity-50` |
 
+Badge status di atas judul Hero diizinkan dan tidak dihitung sebagai label kecil di atas judul.
+
 ### 5.4 Kartu Project (Gambar Besar di Atas)
 
 | State | Style |
