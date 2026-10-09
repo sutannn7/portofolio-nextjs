@@ -42,3 +42,6 @@ next-env.d.ts
 
 build-*.txt
 lint-*.txt
+
+build-*.txt
+lint-*.txt

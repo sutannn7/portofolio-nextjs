@@ -37,7 +37,7 @@ export default function ContactSection() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 pb-16 pt-12">
+    <div className="mx-auto w-full max-w-6xl px-6 pb-16 pt-32">
       <h1 className="text-h1 text-ink">Hubungi saya</h1>
       <p className="mt-4 max-w-xl text-body text-ink-muted">
         Punya tawaran magang, proyek, atau ingin berkolaborasi? Hubungi saya
@@ -73,8 +73,8 @@ export default function ContactSection() {
                 rel="noopener noreferrer"
                 className={linkClass}
               >
-                <Globe className="h-4 w-4 shrink-0" /> LinkedIn: Sutan Akbar
-                Dwi Nugraha
+                <Globe className="h-4 w-4 shrink-0" /> LinkedIn: Sutan Akbar Dwi
+                Nugraha
               </a>
             </div>
           </div>
