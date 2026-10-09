@@ -33,10 +33,7 @@ export default function Steps() {
 
         <ol className="grid gap-6 md:grid-cols-3">
           {steps.map((s) => (
-            <li
-              key={s.number}
-              className="rounded-3xl border border-line bg-surface p-6 sm:p-8"
-            >
+            <li key={s.number} className="rounded-3xl bg-surface p-6 sm:p-8">
               <span className="text-label font-semibold text-ink-muted">
                 {s.number}
               </span>
