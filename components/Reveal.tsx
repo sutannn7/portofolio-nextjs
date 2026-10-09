@@ -1,6 +1,5 @@
 "use client";
 import { motion } from "framer-motion";
-import { ease, ENTER_DELAY } from "@/lib/motion";
 
 export default function Reveal({
   children,
@@ -13,16 +12,16 @@ export default function Reveal({
   from?: "up" | "left" | "right";
   className?: string;
 }) {
-  const x = from === "left" ? "-40px" : from === "right" ? "40px" : "0px";
-  const y = from === "up" ? "40px" : "0px";
+  const x = from === "left" ? -10 : from === "right" ? 10 : 0;
+  const y = from === "up" ? 10 : 0;
 
   return (
     <motion.div
       className={className}
-      initial={{ opacity: "0", x, y, filter: "blur(10px)" }}
-      whileInView={{ opacity: "1", x: "0px", y: "0px", filter: "blur(0px)" }}
+      initial={{ opacity: 0, x, y }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
-      transition={{ delay: ENTER_DELAY + delay, duration: 0.9, ease }}
+      transition={{ delay, duration: 0.25, ease: "easeOut" }}
     >
       {children}
     </motion.div>
