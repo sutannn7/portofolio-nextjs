@@ -1,9 +1,7 @@
 "use client";
-import { motion } from "framer-motion";
 import { FolderGit2, GraduationCap, Music, Trophy } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import Reveal from "@/components/Reveal";
-import { ease, ENTER_DELAY } from "@/lib/motion";
 
 const items = [
   {
@@ -45,40 +43,37 @@ const items = [
 
 export default function ExperienceSection() {
   return (
-    <div className="space-y-6 pb-12 xl:pr-72">
+    <div className="mx-auto w-full max-w-6xl px-6 pb-16 pt-32">
       <PageHeader
         title="Experience"
         subtitle="Perjalanan proyek, pendidikan, prestasi, dan aktivitas saya."
       />
 
-      <div className="relative pl-8 md:pl-10">
-        {/* Garis timeline yang tergambar */}
-        <motion.div
+      <div className="relative pl-12 md:pl-14">
+        {/* Garis timeline */}
+        <div
           aria-hidden
-          className="absolute bottom-2 left-3 top-2 w-px origin-top bg-linear-to-b from-emerald-500/70 to-transparent md:left-4"
-          initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
-          transition={{ delay: ENTER_DELAY + 0.5, duration: 1.6, ease }}
+          className="absolute bottom-2 left-4 top-2 w-px bg-line md:left-5"
         />
 
         <div className="space-y-6">
-          {items.map((it, i) => {
+          {items.map((it) => {
             const Icon = it.icon;
             return (
-              <Reveal key={it.title} delay={0.2 + i * 0.1} from="right">
+              <Reveal key={it.title}>
                 <div className="relative">
-                  <span className="absolute -left-8.5 top-5 grid h-7 w-7 place-items-center rounded-full border border-neutral-800 bg-neutral-900 md:-left-10.5">
-                    <Icon className="h-3.5 w-3.5 text-emerald-400" />
+                  <span className="absolute -left-12 top-8 grid h-8 w-8 place-items-center rounded-pill border border-line bg-surface md:-left-14">
+                    <Icon className="h-4 w-4 text-ink" />
                   </span>
-                  <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-5 backdrop-blur transition-colors hover:border-neutral-700">
+                  <div className="rounded-3xl bg-surface p-8">
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
-                      <p className="font-semibold text-white">{it.title}</p>
-                      <span className="font-mono text-xs text-neutral-400">
+                      <p className="text-h3 text-ink">{it.title}</p>
+                      <span className="text-label text-ink-muted">
                         {it.year}
                       </span>
                     </div>
-                    <p className="mt-1 text-xs text-neutral-400">{it.meta}</p>
-                    <p className="mt-3 max-w-[65ch] text-pretty text-sm leading-relaxed text-neutral-300">
+                    <p className="mt-1 text-label text-ink-muted">{it.meta}</p>
+                    <p className="mt-4 max-w-[65ch] text-pretty text-body text-ink-muted">
                       {it.desc}
                     </p>
                   </div>
