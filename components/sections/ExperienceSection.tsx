@@ -78,7 +78,7 @@ export default function ExperienceSection() {
                       </span>
                     </div>
                     <p className="mt-1 text-xs text-neutral-400">{it.meta}</p>
-                    <p className="mt-3 max-w-prose text-sm leading-relaxed text-neutral-300">
+                    <p className="mt-3 max-w-[65ch] text-pretty text-sm leading-relaxed text-neutral-300">
                       {it.desc}
                     </p>
                   </div>

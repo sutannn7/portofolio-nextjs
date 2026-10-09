@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, X, FolderGit2, Code2 } from "lucide-react";
+import { ArrowUpRight, X, Code2 } from "lucide-react";
 import { projects, type Project } from "@/lib/projects";
 import { stagger, fadeUp, ease } from "@/lib/motion";
 import TiltCard from "@/components/TiltCard";
@@ -71,7 +71,7 @@ export default function ProjectsSection() {
                   {p.title}
                 </motion.h3>
                 <p className="mt-1 text-xs text-neutral-400">{p.type}</p>
-                <p className="mt-3 max-w-prose text-sm leading-relaxed text-neutral-400">{p.short}</p>
+                <p className="mt-3 max-w-[65ch] text-pretty text-sm leading-relaxed text-neutral-300">{p.short}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {p.stack.map((s) => (
                     <span
@@ -107,7 +107,7 @@ export default function ProjectsSection() {
                 layoutId={`card-${selected.id}`}
                 role="dialog"
                 aria-modal="true"
-                className="pointer-events-auto max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-white/10 bg-neutral-950 p-6 md:p-8"
+                className="pointer-events-auto max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-neutral-800 bg-neutral-950 p-6 md:p-8"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -124,7 +124,7 @@ export default function ProjectsSection() {
                   <button
                     onClick={() => setSelected(null)}
                     aria-label="Tutup"
-                    className="rounded-full border border-white/10 p-2 text-gray-400 transition-colors hover:text-white"
+                    className="rounded-full border border-neutral-800 p-2 text-neutral-400 transition-colors hover:text-white"
                   >
                     <X className="h-4 w-4" />
                   </button>

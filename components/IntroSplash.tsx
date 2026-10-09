@@ -50,15 +50,18 @@ export default function IntroSplash() {
     setShow(false);
   };
 
+  // one-time splash init — rAF-deferred, bukan cascade render
   useEffect(() => {
     if (introFinished) return;
 
     document.body.style.overflow = "hidden";
-    setLines(0);
-    setN1("");
-    setN2("");
-    setDecoded(false);
     count.set(0);
+    const initFrame = requestAnimationFrame(() => {
+      setLines(0);
+      setN1("");
+      setN2("");
+      setDecoded(false);
+    });
 
     const timers: ReturnType<typeof setTimeout>[] = [];
     let iv: ReturnType<typeof setInterval> | undefined;
@@ -96,12 +99,12 @@ export default function IntroSplash() {
     timers.push(setTimeout(finish, (TOTAL + 0.5) * 1000));
 
     return () => {
+      cancelAnimationFrame(initFrame);
       controls.stop();
       if (iv) clearInterval(iv);
       timers.forEach(clearTimeout);
       document.body.style.overflow = "";
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
   useEffect(() => {

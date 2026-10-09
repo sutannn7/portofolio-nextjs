@@ -17,13 +17,16 @@ export default function CursorSpotlight() {
 
   useEffect(() => {
     if (!window.matchMedia("(pointer: fine)").matches) return;
-    setEnabled(true);
+    const frame = requestAnimationFrame(() => setEnabled(true));
     const move = (e: PointerEvent) => {
       x.set(e.clientX);
       y.set(e.clientY);
     };
     window.addEventListener("pointermove", move, { passive: true });
-    return () => window.removeEventListener("pointermove", move);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("pointermove", move);
+    };
   }, [x, y]);
 
   if (!enabled) return null;

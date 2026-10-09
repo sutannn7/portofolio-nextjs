@@ -171,7 +171,7 @@ export default function AboutSection() {
             <p className="text-sm text-neutral-400">
               MADAGASCAR (HUT RI ke-77), OSIS SMA Negeri 10 Palembang
             </p>
-            <p className="mt-2 max-w-prose text-sm leading-relaxed text-neutral-300">
+            <p className="mt-2 max-w-[65ch] text-pretty text-sm leading-relaxed text-neutral-300">
               Memimpin tim sebagai ketua tim (in-game leader) dalam menyusun
               strategi dan membagi peran hingga meraih juara 1.
             </p>

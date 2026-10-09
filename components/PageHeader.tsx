@@ -44,7 +44,7 @@ export default function PageHeader({
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: ENTER_DELAY + 0.6, duration: 0.7, ease }}
-          className="max-w-prose text-sm leading-relaxed text-neutral-300"
+          className="max-w-[65ch] text-pretty text-sm leading-relaxed text-neutral-300"
         >
           {subtitle}
         </motion.p>

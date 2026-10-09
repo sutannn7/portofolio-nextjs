@@ -1,0 +1,455 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/Button";
+import { Pill } from "@/components/ui/Pill";
+import { Card } from "@/components/ui/Card";
+
+export default function HomeSection({
+  setActiveSection,
+}: {
+  setActiveSection?: (section: string) => void;
+}) {
+  return (
+    <div className="space-y-0">
+      {/* Hero Section */}
+      <HeroSection />
+
+      {/* About Section */}
+      <AboutSection />
+
+      {/* Experience Section */}
+      <ExperienceSection />
+
+      {/* Projects Section */}
+      <ProjectsSection />
+
+      {/* Contact Section */}
+      <ContactSection />
+    </div>
+  );
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+function HeroSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.15 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section
+      ref={ref}
+      id="home"
+      className="min-h-screen flex flex-col justify-center py-20 md:py-28"
+    >
+      <div className="max-w-[72rem] mx-auto px-4 sm:px-6 w-full">
+        {/* Status Pill */}
+        <div
+          className={`reveal ${visible ? "visible" : ""} mb-8`}
+          style={visible ? { transitionDelay: "0ms" } : {}}
+        >
+          <Pill>Terbuka untuk magang &amp; kolaborasi</Pill>
+        </div>
+
+        {/* H1 */}
+        <h1
+          className={`reveal ${visible ? "visible" : ""} text-[clamp(2.75rem,7vw,5rem)] font-[400] leading-[0.92] tracking-[-0.055em] text-[var(--color-ink)] mb-6`}
+          style={visible ? { transitionDelay: "50ms" } : {}}
+        >
+          Sutan Akbar.
+        </h1>
+
+        {/* Deskripsi */}
+        <p
+          className={`reveal ${visible ? "visible" : ""} max-w-[65ch] text-[1.0625rem] leading-[1.6] text-[var(--color-ink-muted)] mb-8`}
+          style={visible ? { transitionDelay: "100ms" } : {}}
+        >
+          Saya membangun web yang rapi dan interaktif, dari antarmuka sampai
+          database, dengan React, Next.js, Tailwind CSS, PHP, dan MySQL.
+        </p>
+
+        {/* CTA Buttons */}
+        <div
+          className={`reveal ${visible ? "visible" : ""} flex flex-wrap gap-4 mb-12`}
+          style={visible ? { transitionDelay: "150ms" } : {}}
+        >
+          <Button variant="primary">
+            Lihat Project
+          </Button>
+          <Button variant="secondary">
+            Download CV
+          </Button>
+        </div>
+
+        {/* Stats */}
+        <div
+          className={`reveal ${visible ? "visible" : ""} grid grid-cols-3 gap-4 md:gap-6 max-w-sm`}
+          style={visible ? { transitionDelay: "200ms" } : {}}
+        >
+          <div className="bg-[var(--color-surface)] border border-[var(--color-line)] rounded-[24px] p-4">
+            <p className="text-[1.5rem] md:text-[2rem] font-[400] text-[var(--color-ink)] leading-tight">
+              3.55
+            </p>
+            <p className="text-[0.78rem] font-[600] text-[var(--color-ink-muted)] uppercase tracking-wide mt-2">
+              IPK
+            </p>
+          </div>
+          <div className="bg-[var(--color-surface)] border border-[var(--color-line)] rounded-[24px] p-4">
+            <p className="text-[1.5rem] md:text-[2rem] font-[400] text-[var(--color-ink)] leading-tight">
+              2
+            </p>
+            <p className="text-[0.78rem] font-[600] text-[var(--color-ink-muted)] uppercase tracking-wide mt-2">
+              Project
+            </p>
+          </div>
+          <div className="bg-[var(--color-surface)] border border-[var(--color-line)] rounded-[24px] p-4">
+            <p className="text-[1.5rem] md:text-[2rem] font-[400] text-[var(--color-ink)] leading-tight">
+              1
+            </p>
+            <p className="text-[0.78rem] font-[600] text-[var(--color-ink-muted)] uppercase tracking-wide mt-2">
+              Juara 1
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+/* ============================================
+   About Section
+   ============================================ */
+function AboutSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.15 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const skills = [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS",
+    "PHP",
+    "MySQL",
+    "Node.js",
+    "JavaScript",
+    "HTML",
+    "CSS",
+    "REST API",
+    "Git",
+  ];
+
+  return (
+    <section
+      ref={ref}
+      id="about"
+      className="py-[clamp(4rem,8vw,7rem)] border-t border-[var(--color-line)]"
+    >
+      <div className="max-w-[72rem] mx-auto px-4 sm:px-6 w-full">
+        <h2
+          className={`reveal ${visible ? "visible" : ""} text-[clamp(1.75rem,3vw,2.25rem)] font-[400] leading-[1.3] tracking-[-0.02em] text-[var(--color-ink)] mb-8`}
+          style={visible ? { transitionDelay: "0ms" } : {}}
+        >
+          About
+        </h2>
+
+        <div className="max-w-[65ch] space-y-6 mb-12">
+          <p
+            className={`reveal ${visible ? "visible" : ""} text-[1.0625rem] leading-[1.6] text-[var(--color-ink-muted)]`}
+            style={visible ? { transitionDelay: "50ms" } : {}}
+          >
+            Saya adalah mahasiswa D-IV Manajemen Informatika di Politeknik Negeri Sriwijaya dengan passion di web development. Saya fokus membangun interface yang intuitif dan backend yang robust.
+          </p>
+          <p
+            className={`reveal ${visible ? "visible" : ""} text-[1.0625rem] leading-[1.6] text-[var(--color-ink-muted)]`}
+            style={visible ? { transitionDelay: "100ms" } : {}}
+          >
+            Pengalaman saya mencakup full-stack development dengan modern tools dan best practices dalam clean code dan responsive design.
+          </p>
+        </div>
+
+        <div
+          className={`reveal ${visible ? "visible" : ""}`}
+          style={visible ? { transitionDelay: "150ms" } : {}}
+        >
+          <p className="text-[0.78rem] font-[600] text-[var(--color-ink-muted)] uppercase tracking-wide mb-4">
+            Skills
+          </p>
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+            {skills.map((skill, idx) => (
+              <div
+                key={skill}
+                className="bg-[var(--color-surface)] rounded-[12px] px-4 py-3 text-center border border-[var(--color-line)] text-[var(--color-ink)] text-[0.875rem] font-[400] hover:border-[var(--color-ink-muted)] transition-colors"
+                style={visible ? { transitionDelay: `${150 + idx * 30}ms` } : {}}
+              >
+
+/* ============================================
+   Experience Section
+   ============================================ */
+function ExperienceSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.15 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const experiences = [
+    {
+      num: "01",
+      title: "Frontend Development",
+      desc: "Membangun antarmuka yang responsif dan user-friendly menggunakan React dan Tailwind CSS dengan fokus pada aksesibilitas dan performa.",
+    },
+    {
+      num: "02",
+      title: "Backend Development",
+      desc: "Mengembangkan API RESTful dan database architecture menggunakan Node.js, PHP, dan MySQL untuk mendukung aplikasi yang scalable.",
+    },
+    {
+      num: "03",
+      title: "Full-Stack Integration",
+      desc: "Mengintegrasikan frontend dan backend dengan seamless, memastikan komunikasi data yang efisien dan user experience yang optimal.",
+    },
+  ];
+
+  return (
+    <section
+      ref={ref}
+      id="experience"
+      className="py-[clamp(4rem,8vw,7rem)] border-t border-[var(--color-line)]"
+    >
+      <div className="max-w-[72rem] mx-auto px-4 sm:px-6 w-full">
+        <h2
+          className={`reveal ${visible ? "visible" : ""} text-[clamp(1.75rem,3vw,2.25rem)] font-[400] leading-[1.3] tracking-[-0.02em] text-[var(--color-ink)] mb-12`}
+          style={visible ? { transitionDelay: "0ms" } : {}}
+        >
+          Experience
+        </h2>
+
+        <div className="space-y-6">
+          {experiences.map((exp, idx) => (
+            <div
+              key={exp.num}
+              className={`reveal ${visible ? "visible" : ""} bg-[var(--color-surface)] rounded-[24px] p-6 border border-[var(--color-line)] hover:border-[var(--color-ink-muted)] transition-colors`}
+              style={visible ? { transitionDelay: `${50 + idx * 80}ms` } : {}}
+            >
+              <p className="text-[0.78rem] font-[600] text-[var(--color-ink-muted)] uppercase tracking-wider mb-3">
+                {exp.num}
+              </p>
+              <h3 className="text-[1.2rem] font-[400] leading-[1.5] text-[var(--color-ink)] mb-2">
+                {exp.title}
+              </h3>
+              <p className="text-[1.0625rem] leading-[1.6] text-[var(--color-ink-muted)] max-w-[65ch]">
+                {exp.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+                {skill}
+              </div>
+
+/* ============================================
+   Projects Section
+   ============================================ */
+function ProjectsSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.15 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const projects = [
+    {
+      title: "Portfolio Website",
+      desc: "Website portfolio pribadi dengan design system yang konsisten dan performa optimal.",
+      tags: ["Next.js", "React", "Tailwind CSS"],
+    },
+    {
+      title: "TODO: Project 2",
+      desc: "TODO: Tambahkan deskripsi project",
+      tags: ["Tech Stack"],
+    },
+  ];
+
+  return (
+    <section
+      ref={ref}
+      id="projects"
+      className="py-[clamp(4rem,8vw,7rem)] border-t border-[var(--color-line)]"
+    >
+      <div className="max-w-[72rem] mx-auto px-4 sm:px-6 w-full">
+        <h2
+          className={`reveal ${visible ? "visible" : ""} text-[clamp(1.75rem,3vw,2.25rem)] font-[400] leading-[1.3] tracking-[-0.02em] text-[var(--color-ink)] mb-12`}
+          style={visible ? { transitionDelay: "0ms" } : {}}
+        >
+          Projects
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {projects.map((project, idx) => (
+            <div
+              key={project.title}
+              className={`reveal ${visible ? "visible" : ""} bg-[var(--color-surface)] rounded-[24px] overflow-hidden border border-[var(--color-line)] hover:border-[var(--color-ink-muted)] hover:-translate-y-0.5 transition-all`}
+              style={visible ? { transitionDelay: `${50 + idx * 80}ms` } : {}}
+            >
+              <div className="aspect-[16/10] bg-[var(--color-bg)] flex items-center justify-center relative">
+                <span className="text-[var(--color-ink-muted)] text-[0.875rem]">
+                  [Gambar Project]
+                </span>
+              </div>
+
+              <div className="p-5">
+                <h3 className="text-[1.2rem] font-[400] leading-[1.5] text-[var(--color-ink)] mb-2">
+                  {project.title}
+                </h3>
+                <p className="text-[1.0625rem] leading-[1.6] text-[var(--color-ink-muted)] mb-4">
+                  {project.desc}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center px-3 py-1 rounded-[999px] bg-[var(--color-bg)] text-[var(--color-ink-muted)] text-[0.75rem] font-[600]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+
+/* ============================================
+   Contact Section
+   ============================================ */
+function ContactSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.15 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section
+      ref={ref}
+      id="contact"
+      className="py-[clamp(4rem,8vw,7rem)] border-t border-[var(--color-line)]"
+    >
+      <div className="max-w-[72rem] mx-auto px-4 sm:px-6 w-full">
+        <h2
+          className={`reveal ${visible ? "visible" : ""} text-[clamp(1.75rem,3vw,2.25rem)] font-[400] leading-[1.3] tracking-[-0.02em] text-[var(--color-ink)] mb-8`}
+          style={visible ? { transitionDelay: "0ms" } : {}}
+        >
+          Contact
+        </h2>
+
+        <p
+          className={`reveal ${visible ? "visible" : ""} max-w-[65ch] text-[1.0625rem] leading-[1.6] text-[var(--color-ink-muted)] mb-8`}
+          style={visible ? { transitionDelay: "50ms" } : {}}
+        >
+          Hubungi saya untuk diskusi atau kolaborasi. Saya terbuka untuk
+          magang, project freelance, atau opportunity lainnya.
+        </p>
+
+        <div
+          className={`reveal ${visible ? "visible" : ""} flex flex-col sm:flex-row gap-4`}
+          style={visible ? { transitionDelay: "100ms" } : {}}
+        >
+          <a
+            href="mailto:TODO@email.com"
+            className="inline-flex items-center px-6 py-3 rounded-[999px] bg-[var(--color-ink)] text-[var(--color-white)] text-[0.875rem] font-[600] hover:opacity-90 hover:scale-[1.02] transition-all"
+          >
+            Email Saya
+          </a>
+          <a
+            href="https://github.com/TODO"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-6 py-3 rounded-[999px] bg-[var(--color-surface)] text-[var(--color-ink)] border border-[var(--color-line)] text-[0.875rem] font-[600] hover:border-[var(--color-ink-muted)] transition-colors"
+          >
+            GitHub
+          </a>
+          <a
+            href="https://linkedin.com/in/TODO"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-6 py-3 rounded-[999px] bg-[var(--color-surface)] text-[var(--color-ink)] border border-[var(--color-line)] text-[0.875rem] font-[600] hover:border-[var(--color-ink-muted)] transition-colors"
+          >
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <div className="border-t border-[var(--color-line)] mt-12 pt-8">
+        <div className="max-w-[72rem] mx-auto px-4 sm:px-6 w-full">
+          <p className="text-[0.875rem] text-[var(--color-ink-muted)]">
+            &copy; 2026 Sutan Akbar. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,34 +1,89 @@
 @import "tailwindcss";
 
+/* =========================================================
+   DESIGN.md — Portofolio Sutan Akbar (Design Token Layer)
+   ========================================================= */
+
 :root {
-  --background: #09090b;
-  --foreground: #f4f4f5;
-  --accent: #10b981;
-  --accent-hover: #059669;
-  --border: #27272a;
-  --surface: #18181b;
+  /* Latar & surface */
+  --color-bg: #EFEAE9;
+  --color-surface: #FFFFFF;
+  --color-highlight: #FFC7D8; /* pink lembut, latar kecil & titik status */
+
+  /* Teks */
+  --color-ink: #171313;
+  --color-ink-muted: rgba(23, 19, 19, 0.72);
+  --color-line: rgba(23, 19, 19, 0.2);
+
+  /* Status & aksen */
+  --color-accent-lime: #C8FF12; /* TITIK STATUS SAJA, BUKAN TEKS */
+  --color-white: #FFFFFF;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1a1616;
+    --color-surface: #252020;
+    --color-ink: #F5F0EF;
+    --color-ink-muted: rgba(245, 240, 239, 0.72);
+    --color-line: rgba(245, 240, 239, 0.15);
+  }
+}
+
+html {
+  color-scheme: light;
+}
+
+/* Tailwind v4 theme — expose design tokens sebagai utility */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-accent: var(--accent);
-  --font-sans: var(--font-dm-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sora);
+  /* Warna */
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-highlight: var(--color-highlight);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-line: var(--color-line);
+  --color-white: var(--color-white);
+
+  /* Radius */
+  --radius-card: 24px;
+  --radius-pill: 999px;
+  --radius-skill: 12px;
+
+  /* Tipografi — skala DESIGN.md */
+  --text-h1: clamp(2.75rem, 7vw, 5rem);
+  --text-h2: clamp(1.75rem, 3vw, 2.25rem);
+  --text-h3: 1.2rem;
+  --text-body: 1.0625rem;
+  --text-label: 0.78rem;
+
+  /* Font */
+  --font-montserrat: var(--font-montserrat);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-montserrat), system-ui, sans-serif;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-sora), system-ui, sans-serif;
+/* =========================================================
+   Reveal animation (DESIGN.md §7.2)
+   ========================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 250ms ease-out, transform 250ms ease-out;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
 }

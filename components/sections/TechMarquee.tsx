@@ -19,12 +19,12 @@ export default function TechMarquee() {
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
           transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-          className="flex gap-8 items-center text-sm font-semibold text-gray-400"
+          className="flex gap-8 items-center text-sm font-semibold text-neutral-400"
         >
           {[...techs, ...techs].map((tech, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-800 text-gray-300"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-300"
             >
               <span className="w-2 h-2 rounded-full bg-emerald-400" />
               {tech}
