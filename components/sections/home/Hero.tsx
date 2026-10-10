@@ -23,7 +23,9 @@ const secondaryBtn =
 
 export default function Hero() {
   return (
-    <section aria-labelledby="hero-title" className="py-[clamp(4rem,8vw,7rem)]">
+    <section
+      aria-labelledby="hero-title"
+      className="pb-[clamp(4rem,8vw,7rem)] pt-40 md:pt-[clamp(4rem,8vw,7rem)]">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 sm:px-6">
         <p className="inline-flex w-fit items-center gap-2 rounded-pill border border-line bg-surface px-[0.9rem] py-[0.45rem] text-label font-semibold text-ink">
           <span
