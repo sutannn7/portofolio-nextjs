@@ -139,7 +139,7 @@ export default function AboutSection() {
         <div
           ref={gridRef}
           data-fan={fanned ? "on" : "off"}
-          className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-8"
+          className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-8 md:pb-5"
         >
           {skills.map((g, i) => (
             <Reveal key={g.title} delay={(i % 3) * 0.07} className="h-full">
