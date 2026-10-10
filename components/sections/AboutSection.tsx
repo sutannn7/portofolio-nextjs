@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useRef, useState } from "react";
 import { GraduationCap, Award, Cpu } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import Reveal from "@/components/Reveal";
@@ -52,8 +53,28 @@ const pill =
   "rounded-pill border border-line px-3 py-1 text-label text-ink-muted";
 const sectionTitle = "flex items-center gap-3 text-h2 text-ink";
 const tones = ["bg-mint", "bg-sky", "bg-butter", "bg-highlight"];
+const fanClass = ["fan-l", "fan-m", "fan-r"];
 
 export default function AboutSection() {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [fanned, setFanned] = useState(false);
+
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setFanned(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="mx-auto w-full max-w-6xl space-y-16 px-6 pb-16 pt-32">
       <PageHeader
@@ -115,11 +136,15 @@ export default function AboutSection() {
             <Cpu className="h-6 w-6" /> Keterampilan
           </h2>
         </Reveal>
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div
+          ref={gridRef}
+          data-fan={fanned ? "on" : "off"}
+          className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-8"
+        >
           {skills.map((g, i) => (
-            <Reveal key={g.title} delay={(i % 2) * 0.07} className="h-full">
+            <Reveal key={g.title} delay={(i % 3) * 0.07} className="h-full">
               <div
-                className={`${tones[i % tones.length]} h-full rounded-3xl p-8 transition-transform duration-300 ease-out hover:-translate-y-1`}
+                className={`${tones[i % tones.length]} ${fanClass[i % 3]} fan-card h-full rounded-3xl p-8 transition-transform duration-300 ease-out hover:-translate-y-1`}
               >
                 <p className="mb-4 text-h3 text-ink">{g.title}</p>
                 <div className="flex flex-wrap gap-2">

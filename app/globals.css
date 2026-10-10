@@ -94,3 +94,19 @@ body {
     animation: none;
   }
 }
+
+/* Kipas kartu keterampilan About (DESIGN.md 7.5) */
+@media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {
+  .fan-card {
+    transition: transform 400ms ease-out, translate 300ms ease-out;
+  }
+  [data-fan="on"] .fan-l {
+    transform: translateY(12px) rotate(-3deg);
+  }
+  [data-fan="on"] .fan-m {
+    transform: translateY(-8px) scale(1.05);
+  }
+  [data-fan="on"] .fan-r {
+    transform: translateY(12px) rotate(3deg);
+  }
+}
