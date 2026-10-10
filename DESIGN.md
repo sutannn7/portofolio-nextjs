@@ -350,7 +350,7 @@ className={`reveal ${visible ? 'visible' : ''} ${visible ? `style="transition-de
 | Angka statistik Hero | Hitung naik dari 0, sekali saat terlihat, maksimal 1 detik |
 | Transisi antarhalaman | Fade pendek, maksimal 250ms |
 | Scroll progress | Garis tipis `bg-ink` di atas halaman |
-| Kartu keterampilan About (kipas) | Saat masuk viewport, kartu miring maks 5° dan turun membentuk busur, kartu tengah naik dan membesar maks `scale-105`, 400ms. Hanya layar `md` ke atas. Tanpa glow, tanpa warna di luar palet. |
+| Kartu mengipas (About: keterampilan; Home: Cara saya bekerja) | Saat masuk viewport, kartu miring maks 3° dan turun membentuk busur, kartu tengah naik dan membesar maks `scale-105`, 400ms. Hanya layar `md` ke atas. Tanpa glow, tanpa warna di luar palet. |
 
 Semua efek di atas wajib mati pada `prefers-reduced-motion: reduce` (§8.5).
 Marquee/teks berjalan BELUM disetujui; tambahkan ke tabel ini dulu sebelum dibuat.
