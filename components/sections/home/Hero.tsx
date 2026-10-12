@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 import CountUp from "@/components/ui/CountUp";
+import { useScrollReveal } from "@/components/hooks/useScrollReveal";
 
 type Stat = {
   value: string;
@@ -21,38 +25,84 @@ const primaryBtn =
 const secondaryBtn =
   "inline-flex min-h-11 items-center justify-center rounded-pill border border-line bg-transparent px-6 text-body font-semibold text-ink transition-colors hover:bg-highlight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+
 export default function Hero() {
+  const { ref, isInView } = useScrollReveal();
+
   return (
-    <section
+    <motion.section
+      ref={ref}
       aria-labelledby="hero-title"
       className="pb-[clamp(4rem,8vw,7rem)] pt-40 md:pt-[clamp(4rem,8vw,7rem)]"
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={containerVariants}
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 sm:px-6">
 
-        <h1
+        <motion.h1
           id="hero-title"
           className="max-w-4xl text-h1 font-normal leading-[0.95] tracking-[-0.055em] text-ink"
+          variants={itemVariants}
         >
           Hi, I&apos;m Sutan Akbar
-        </h1>
+        </motion.h1>
 
-        <p className="max-w-[65ch] text-body text-ink-muted">
+        <motion.p
+          className="max-w-[65ch] text-body text-ink-muted"
+          variants={itemVariants}
+        >
           Saya membangun web yang rapi dan interaktif, dari antarmuka sampai
           database, dengan React, Next.js, Tailwind CSS, PHP, dan MySQL.
-        </p>
+        </motion.p>
 
-        <div className="flex flex-wrap gap-3">
+        <motion.div
+          className="flex flex-wrap gap-3"
+          variants={itemVariants}
+        >
           <Link href="/projects" className={primaryBtn}>
             Lihat Project
           </Link>
           <Link href="/contact" className={secondaryBtn}>
             Hubungi Saya
           </Link>
-        </div>
+        </motion.div>
 
-        <dl className="mt-6 grid grid-cols-1 gap-6 border-t border-line pt-8 sm:grid-cols-3">
+        <motion.dl
+          className="mt-6 grid grid-cols-1 gap-6 border-t border-line pt-8 sm:grid-cols-3"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {stats.map((s) => (
-            <div key={s.label} className="flex flex-col-reverse gap-1">
+            <motion.div
+              key={s.label}
+              className="flex flex-col-reverse gap-1"
+              variants={itemVariants}
+            >
               <dt className="text-label font-semibold text-ink-muted">
                 {s.label}
               </dt>
@@ -68,10 +118,10 @@ export default function Hero() {
                   </span>
                 )}
               </dd>
-            </div>
+            </motion.div>
           ))}
-        </dl>
+        </motion.dl>
       </div>
-    </section>
+    </motion.section>
   );
 }
