@@ -351,6 +351,7 @@ className={`reveal ${visible ? 'visible' : ''} ${visible ? `style="transition-de
 | Transisi antarhalaman | Fade pendek, maksimal 250ms |
 | Scroll progress | Garis tipis `bg-ink` di atas halaman |
 | Kartu mengipas (About: keterampilan; Home: Cara saya bekerja) | Saat masuk viewport, kartu miring maks 3° dan turun membentuk busur, kartu tengah naik dan membesar maks `scale-105`, 400ms. Hanya layar `md` ke atas. Tanpa glow, tanpa warna di luar palet. |
+| Intro nama (Home) | Layar `bg-bg` penuh, nama naik dari balik mask lalu layar bergeser ke atas, total maks 1,5 detik. Sekali per sesi, bisa dilewati klik atau Esc. Hanya palet, tanpa glow. |
 
 Semua efek di atas wajib mati pada `prefers-reduced-motion: reduce` (§8.5).
 Marquee/teks berjalan BELUM disetujui; tambahkan ke tabel ini dulu sebelum dibuat.
@@ -469,8 +470,7 @@ Setiap `<img>` wajib memiliki `alt` yang deskriptif. Gambar dekoratif gunakan `a
 | Transition pada `padding`, `width`, `height` | Menyebabkan layout shift |
 | Durasi > 400ms | Terlalu lambat untuk UX |
 | Gradient text, glow/neon, efek grid atau spotlight | Dekoratif, mengganggu keterbacaan |
-| Cursor spotlight, efek tilt/miring pada kartu | Dekoratif |
-| Efek mengetik (typewriter), intro splash, animated background | Dekoratif, memperlambat |
+| Efek mengetik (typewriter), animated background, intro splash selain yang tercantum di §7.5 | Dekoratif, memperlambat |
 | Label kecil huruf kapital di atas judul (eyebrow) | Hierarki harus dari ukuran |
 | Shadow berat | Desain flat sesuai referensi |
 | Tidak menghormati `prefers-reduced-motion` | Aksesibilitas |

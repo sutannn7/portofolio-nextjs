@@ -1,0 +1,54 @@
+/* Intro nama (DESIGN.md 7.5): maks 1,5 detik, sekali per sesi, bisa dilewati. */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg, #efeae9);
+  cursor: pointer;
+  /* layar bergeser ke atas setelah nama terbaca (mulai 1000ms, durasi 450ms) */
+  animation: intro-overlay-out 450ms cubic-bezier(0.76, 0, 0.24, 1) 1000ms forwards;
+}
+
+.intro-line {
+  margin: 0;
+  overflow: hidden; /* mask: huruf muncul dari balik garis ini */
+  padding: 0.08em 0;
+  font-size: clamp(2.75rem, 7vw, 5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.055em;
+  color: var(--color-ink, #171313);
+}
+
+.intro-word {
+  display: block;
+  transform: translateY(110%);
+  animation: intro-word-in 600ms cubic-bezier(0.2, 0.7, 0.2, 1) 120ms forwards;
+}
+
+@keyframes intro-word-in {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes intro-overlay-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-overlay {
+    display: none;
+  }
+}
