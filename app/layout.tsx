@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Montserrat, Pixelify_Sans } from "next/font/google";
 import "./globals.css";
 import MotionProvider from "@/components/MotionProvider";
 import TransitionProvider from "@/components/TransitionProvider";
-import Shell from "@/components/Shell";
+import SiteChrome from "@/components/SiteChrome";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
   weight: ["400", "600"],
+  display: "swap",
+});
+
+const pixelify = Pixelify_Sans({
+  subsets: ["latin"],
+  variable: "--font-pixelify",
   display: "swap",
 });
 
@@ -26,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={montserrat.variable}
+      className={`${montserrat.variable} ${pixelify.variable}`}
     >
       <body className="bg-[var(--color-bg)] font-sans text-[var(--color-ink)] antialiased selection:bg-[var(--color-highlight)]/30 selection:text-[var(--color-ink)]">
         <a
@@ -37,7 +43,7 @@ export default function RootLayout({
         </a>
         <MotionProvider>
           <TransitionProvider>
-            <Shell />
+            <SiteChrome />
             <main
               id="main-content"
               className="mx-auto px-5 pb-16 md:px-8"

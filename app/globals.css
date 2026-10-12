@@ -6,7 +6,7 @@
 
 /* Tailwind v4: token didaftarkan sekali di sini, otomatis jadi class utility */
 @theme {
-  /* Warna */
+  /* Warna — Portfolio */
   --color-bg: #EFEAE9;
   --color-surface: #FFFFFF;
   --color-ink: #171313;
@@ -17,6 +17,18 @@
   --color-sky: #CFE2FF;
   --color-butter: #FFEBA8;
   --color-signal: #C8FF12;    /* TITIK STATUS SAJA, BUKAN TEKS */
+
+  /* Warna — Pixel Game (DESIGN.md v3 §2) */
+  --pixel-dark: #0B0014;      /* hitam biru gelap */
+  --pixel-purple: #2C1B47;    /* ungu gelap */
+  --pixel-magenta: #7D3C98;   /* magenta */
+  --pixel-cyan: #00D9FF;      /* cyan terang */
+  --pixel-lime: #00FF41;      /* lime terang */
+  --pixel-yellow: #FFFF00;    /* kuning murni */
+  --pixel-pink: #FF006E;      /* pink neon */
+
+  /* Pixel unit (8-bit grid base) */
+  --px: 8px;
 
   /* Radius */
   --radius-card: 24px;
