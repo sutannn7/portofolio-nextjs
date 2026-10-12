@@ -1,575 +1,255 @@
-# DESIGN.md — Portofolio Sutan Akbar
+# DESIGN.md - Portofolio Sutan Akbar (v3: Dunia Game Pixel 8-bit)
 
-> Versi: 2.1 (Jalur B: palet pastel + gerak tambahan) | Tanggal: 2026-10-10
-> Stack: Next.js + Tailwind CSS
-> Struktur: situs multi-halaman (/, /about, /experience, /projects, /contact)
-> Target: Rekruter & dosen (waktu baca ~30 detik per halaman)
-> Sumber inspirasi: https://typesomething.co/ (prinsip saja, bukan salinan)
-> Prototype acuan utama: Figma attached (desktop & mobile)
+> Versi: 3.0 | Tanggal: 2026-10-13 | Status: DRAF, perlu persetujuan pemilik sebelum jadi acuan kode
+> Menggantikan: v2.1 (warm minimalism). v2.1 disimpan sebagai `DESIGN-v2.1.md` dan tetap berlaku untuk Mode Cepat.
+> Stack: Next.js 16 (Cache Components) + Tailwind CSS v4
+> Acuan: PRD Desain bagian 17. Referensi interaksi: rleonardi.com/interactive-resume (prinsip saja, bukan salinan).
 
 ---
 
-## 1. Prinsip Desain
+## 1. Ruang lingkup dan hubungan dengan v2.1
 
-1. **Tipografi sebagai hierarki utama.** Judul pakai bobot reguler (400) dengan letter-spacing sangat rapat; ukuran saja yang membedakan level. Tidak pakai bold, kapital, atau warna berbeda untuk judul section.
-2. **Ruang napas cukup.** Kontainer max 72rem, padding vertikal section clamp(4rem, 8vw, 7rem), gap kartu 1.5rem. Setiap blok konten punya jarak yang terasa lega.
-3. **Kartu putih di atas krem.** Surface putih (#FFFFFF) dengan radius besar (24px) di atas latar krem (#EFEAE9). Border 1px line opsional tapi disarankan.
-4. **Aksen terbatas pada palet pastel.** Warna non-netral yang diizinkan hanya: highlight pink (#FFC7D8), mint (#CDEBD8), sky (#CFE2FF), butter (#FFEBA8), plus dark card (ink) untuk CTA block dan signal lime (#C8FF12) khusus titik status. Pastel hanya sebagai LATAR, tidak pernah sebagai warna teks atau ikon. Dilarang menambahkan warna lain di luar daftar ini.
-5. **Motion halus dan bermakna.** Reveal fade + slide-up 8–12px, 200–300ms, hormati `prefers-reduced-motion`. Efek tambahan hanya yang tercantum di §7.5. Tidak ada animasi dekoratif di luar daftar itu.
+- Dokumen ini mengatur **Dunia Game**: resume interaktif side-scrolling bergaya pixel 8-bit.
+- **Mode Cepat** (halaman lama: Home, About, Experience, Projects, Contact) tetap mengikuti `DESIGN-v2.1.md` tanpa perubahan.
+- Bila dua dokumen bertentangan: Dunia Game memakai v3, Mode Cepat memakai v2.1.
+- Token v2.1 tetap ada dengan nilai yang sama: bg, surface, ink, ink-muted, line, highlight, mint, sky, butter, signal.
 
----
+## 2. Prinsip
 
-## 2. Warna
+1. **Game hanya pembungkus.** Semua isi tetap teks HTML nyata, bukan gambar.
+2. **Selalu ada jalan keluar.** Tombol Mode Cepat dan Download CV terlihat di setiap level.
+3. **Pixel yang konsisten.** Satu grid piksel, tanpa blur, tanpa gradient halus.
+4. **Teks selalu di panel solid.** Tidak pernah langsung di atas gambar latar.
+5. **Jujur.** Tingkat keterampilan sesuai kenyataan, bukan demi tampilan.
+6. **Gerak aman.** Tidak ada kedipan cepat, dan semua gerak mati pada reduced-motion.
+7. **Gulir bawaan browser.** Tidak membajak roda mouse atau sentuhan.
 
-### Tabel Pasangan Teks/Latar
+## 3. Struktur dan rute
 
-| Pasangan | Foreground | Background | Rasio | WCAG |
-|---|---|---|---|---|
-| Ink pada krem | `#171313` | `#EFEAE9` | **15.5:1** | AAA ✓ |
-| Ink-muted pada krem | `rgba(23,19,19,.72)` | `#EFEAE9` | **10.8:1** | AAA ✓ |
-| White pada ink (CTA gelap) | `#FFFFFF` | `#171313` | **15.5:1** | AAA ✓ |
-| Ink pada putih (kartu) | `#171313` | `#FFFFFF` | **15.5:1** | AAA ✓ |
-| Ink-muted pada putih | `rgba(23,19,19,.72)` | `#FFFFFF` | **10.8:1** | AAA ✓ |
-| Ink pada mint | `#171313` | `#CDEBD8` | **14.5:1** | AAA ✓ |
-| Ink pada sky | `#171313` | `#CFE2FF` | **14.0:1** | AAA ✓ |
-| Ink pada butter | `#171313` | `#FFEBA8` | **15.5:1** | AAA ✓ |
-| Ink pada pink | `#171313` | `#FFC7D8` | **12.7:1** | AAA ✓ |
-| Ink-muted pada pastel (mint/sky/butter/pink) | `rgba(23,19,19,.72)` | pastel | **6.1–6.8:1** | AA ✓ (bukan AAA) |
-| **Lime pada krem** ⚠️ | `#C8FF12` | `#EFEAE9` | **~1.1:1** | FAIL ✗ |
-
-> **DILARANG** menggunakan `#C8FF12` untuk teks atau ikon. Lime hanya boleh sebagai titik status kecil (diameter ~6–8px) karena berfungsi sebagai penanda visual, bukan bacaan. Class Tailwind-nya `bg-signal`.
-> **Catatan Figma:** Titik status pada prototype Figma tampak pink (`#FFC7D8`), sedangkan implementasi saat ini memakai lime (`bg-signal`) di pill Hero dan Footer. Kedua-duanya diizinkan untuk titik status; jangan dicampur dalam satu halaman.
-> **Teks di atas pastel:** pakai `text-ink` penuh. `text-ink-muted` boleh untuk teks besar/isi sekunder (rasio 6.1–6.8:1, lulus AA).
-
-### Token (app/globals.css, Tailwind v4)
-
-Nilai warna ditulis SEKALI di blok `@theme` dan otomatis menjadi class utility
-(`bg-bg`, `bg-surface`, `text-ink`, `text-ink-muted`, `border-line`, `bg-highlight`,
-`bg-mint`, `bg-sky`, `bg-butter`, `bg-signal`). Tidak ada mode gelap.
-
-```css
-@theme {
-  --color-bg: #EFEAE9;
-  --color-surface: #FFFFFF;
-  --color-ink: #171313;
-  --color-ink-muted: rgba(23, 19, 19, 0.72);
-  --color-line: rgba(23, 19, 19, 0.2);
-
-  /* Pastel: LATAR saja, satu per kartu/bagian */
-  --color-highlight: #FFC7D8;
-  --color-mint: #CDEBD8;
-  --color-sky: #CFE2FF;
-  --color-butter: #FFEBA8;
-
-  /* Titik status saja, BUKAN teks/ikon */
-  --color-signal: #C8FF12;
-
-  --radius-card: 24px;
-  --radius-pill: 999px;
-  --radius-skill: 12px;
-}
-
-html { color-scheme: light; }
-
-body {
-  background-color: var(--color-bg);
-  color: var(--color-ink);
-  font-family: var(--font-montserrat), system-ui, sans-serif;
-}
-```
-
----
-
-## 3. Tipografi
-
-### Skala (USULAN — sesuaikan dengan viewport desktop)
-
-| Elemen | Ukuran | Line-height | Letter-spacing | Bobot |
-|---|---|---|---|---|
-| h1 | `clamp(2.75rem, 7vw, 5rem)` | 0.92–0.95 | -0.055em | 400 |
-| h2 | `clamp(1.75rem, 3vw, 2.25rem)` | 1.3 | -0.02em | 400 |
-| h3 | 1.2rem (19.2px) | 1.5 | -0.01em | 400 |
-| Isi/body | 1.0625rem (17px) | 1.6 | 0 | 400 |
-| Label/tombol | 0.78rem (12.48px) | 1.3 | 0 | 600 |
-
-> **Catatan Figma:** h1 pada prototype terlihat sekitar 52px di viewport ~490px (kemungkinan batas minimum clamp). Di desktop jauh lebih besar. Nilai di atas adalah USULAN berdasarkan referensi typesomething.co.
-
-### Aturan Lebar Baca
-
-- **Maksimal 65 karakter per baris** untuk paragraf isi.
-- Gunakan `max-w-[65ch] text-pretty` pada elemen `<p>`, `<li>`, dan kolom teks panjang.
-- h1 dan h2 tidak dibatasi lebar (biarkan wrap natural).
-- Kontainer utama: `max-w-[72rem] mx-auto px-4 sm:px-6`.
-
-### Font
-
-- **Montserrat (variable)** untuk SEMUA teks, diimpor via `next/font/google`.
-- Bobot 400 untuk judul dan isi, 600 hanya untuk label kecil dan tombol.
-- Jangan campur font lain.
-
-### 5.1 Navbar
-
-| State | Deskripsi |
-|---|---|
-| **Default** | Logo "Sutan Akbar." (kiri, ink, bobot 400, ukuran ~1rem). Navigasi centered (Home, About, Experience, Projects, Contact) — link teks ink-muted (halaman aktif: ink), ukuran 0.875rem, hover: opacity 0.7. Tombol "Mari terhubung" (kanan) — pill gelap, teks putih, bobot 600, ukuran 0.78rem. Fixed top, backdrop-blur, border-b tipis. |
-| **Hover** | Link nav: opacity 0.7. Tombol CTA: scale 1.02, opacity naik. |
-| **Focus** | Ring tipis 2px ink di sekeliling link/tombol, offset 2px. |
-| **Disabled** | Tidak ada link disabled di navbar. |
-
-```tsx
-// Struktur (implementasi saat ini: components/Navbar.tsx)
-// - Tautan memakai next/link ke rute: /, /about, /experience, /projects, /contact
-// - Menu halaman aktif: text-ink; lainnya: text-ink-muted (usePathname)
-// - Layar < md: menu desktop disembunyikan, diganti satu baris menu yang bisa digeser
-<nav className="fixed left-0 right-0 top-0 z-50 border-b border-line bg-bg/90 backdrop-blur-sm">
-  ...
-  <Link href="/contact" className="rounded-pill bg-ink px-4 py-2 text-label font-semibold text-surface ...">
-    Mari terhubung
-  </Link>
-</nav>
-```
-
-### 5.2 Tombol
-
-#### Tombol Utama (Dark)
-
-| State | Style |
-|---|---|
-| **Default** | `bg-[var(--color-ink)] text-[var(--color-white)] rounded-[999px] px-6 py-3 text-[0.875rem] font-[600] min-h-[44px]` |
-| **Hover** | `opacity-90 scale-[1.02]` |
-| **Focus** | `outline-none ring-2 ring-[var(--color-ink)] ring-offset-2 ring-offset-[var(--color-bg)]` |
-| **Disabled** | `opacity-40 cursor-not-allowed` |
-
-#### Tombol Sekunder (White/Light)
-
-| State | Style |
-|---|---|
-| **Default** | `bg-[var(--color-surface)] text-[var(--color-ink)] border border-[var(--color-line)] rounded-[999px] px-6 py-3 text-[0.875rem] font-[600] min-h-[44px]` |
-| **Hover** | `border-[var(--color-ink-muted)] opacity-90 scale-[1.02]` |
-| **Focus** | `outline-none ring-2 ring-[var(--color-ink)] ring-offset-2 ring-offset-[var(--color-bg)]` |
-| **Disabled** | `opacity-40 cursor-not-allowed border-[var(--color-line)]` |
-
-### 5.3 Pill Status
-
-| State | Style |
-|---|---|
-| **Default** | `inline-flex items-center gap-2 px-4 py-1.5 bg-[var(--color-surface)] border border-[var(--color-line)] rounded-[999px] text-[0.78rem] font-[600] text-[var(--color-ink)]` |
-| **Titik status** | `w-1.5 h-1.5 rounded-full bg-[var(--color-highlight)] inline-block` (pink, dari Figma) |
-| **Hover** | `border-[var(--color-ink-muted)]` |
-| **Focus** | `outline-none ring-2 ring-[var(--color-ink)] ring-offset-1` |
-| **Disabled** | `opacity-50` |
-
-Badge status di atas judul Hero dihapus; token signal dicadangkan.
-
-### 5.4 Kartu Project (Gambar Besar di Atas)
-
-| State | Style |
-|---|---|
-| **Default** | `bg-[var(--color-surface)] rounded-[24px] overflow-hidden border border-[var(--color-line)]` |
-| **Area gambar** | `aspect-[16/10] bg-[var(--color-bg)] rounded-t-[24px] overflow-hidden relative` — placeholder dengan tooltip "..." di pojok kiri atas. Gambar: `w-full h-full object-cover`. |
-| **Konten** | `p-5` — judul h3, deskripsi body, tag pill (HTML, CSS, JS) di baris bawah. |
-| **Hover** | `transform translateY(-2px) border-[var(--color-ink-muted)]` |
-| **Focus** | `outline-none ring-2 ring-[var(--color-ink)] ring-offset-2 ring-offset-[var(--color-bg)] rounded-[24px]` |
-| **Disabled** | `opacity-50 cursor-not-allowed` |
-
-```tsx
-// Tag pill kecil
-<span class="inline-flex items-center px-3 py-1 rounded-[999px] bg-[var(--color-bg)] text-[var(--color-ink-muted)] text-[0.75rem] font-[600]">HTML</span>
-```
-
-### 5.5 Kartu Langkah Bernomor (01-03)
-
-| State | Style |
-|---|---|
-| **Default** | `rounded-[24px] p-6 sm:p-8` dengan latar pastel (kartu 01 `bg-mint`, 02 `bg-sky`, 03 `bg-butter`), tanpa border. Teks `text-ink`. |
-| **Nomor** | `text-[var(--color-ink-muted)] text-[0.78rem] font-[600] tracking-wider mb-3` (format: "01", "02", "03") |
-| **Judul** | `text-[var(--color-ink)] text-[1.2rem] font-[400] leading-[1.5] mb-2` |
-| **Isi** | `text-[var(--color-ink-muted)] text-[1.0625rem] leading-[1.6] max-w-[65ch]` |
-| **Hover** | `hover:-translate-y-1` (naik 4px, tanpa shadow), `transition-transform duration-300 ease-out` |
-| **Focus** | `outline-none ring-2 ring-[var(--color-ink)] ring-offset-2 ring-offset-[var(--color-bg)] rounded-[24px]` |
-| **Disabled** | `opacity-50 cursor-not-allowed` |
-
-### 5.6 Grid Skill
-
-| State | Style |
-|---|---|
-| **Default** | `grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3` |
-| **Item skill** | `bg-[var(--color-surface)] rounded-[12px] px-4 py-3 text-center border border-[var(--color-line)] text-[var(--color-ink)] text-[0.875rem] font-[400]` |
-| **Hover** | `border-[var(--color-ink-muted)] bg-[var(--color-bg)]` |
-| **Focus** | `outline-none ring-2 ring-[var(--color-ink)] ring-offset-1 rounded-[12px]` |
-
-### 5.7 Kartu Pastel
-
-Kartu atau bagian berlatar pastel (mint, sky, butter, highlight) untuk memberi warna tanpa menambah elemen dekoratif.
-
-| Aturan | Style |
-|---|---|
-| Latar | Satu pastel per kartu/bagian. Tidak digabung, tidak digradasi. |
-| Teks | `text-ink` (judul dan isi). Pastel tidak pernah jadi warna teks/ikon. |
-| Bentuk | `rounded-3xl` (24px), tanpa border, tanpa shadow. |
-| Hover | `hover:-translate-y-1 transition-transform duration-300 ease-out` |
-| Pill kecil | `rounded-pill bg-highlight px-3 py-1 text-label text-ink` (atau pastel lain) |
-
-### 5.8 Blok CTA Gelap
-
-`bg-ink` dengan teks `text-bg`/`text-surface`, `rounded-3xl`, padding besar. Tombol utama di dalamnya berupa pill `bg-highlight text-ink`; tombol sekunder `border border-surface/30 text-surface`.
-
-### Kontainer
-
-```css
-/* Tailwind utility recommendation */
-.container-custom {
-  max-width: min(100% - 2rem, 72rem);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-```
-
-### Spasi Vertikal Section
-
-```
-padding-block: clamp(4rem, 8vw, 7rem);
-```
-
-### Spasi Horizontal
-
-- Padding sisi: `px-4` (mobile) → `px-6` (tablet+) → sesuai kontainer 72rem max.
-- Gap antar kartu: `1.5rem` (24px).
-
-### Responsif (mulai 360px)
-
-| Breakpoint | Maks lebar konten | Layout kartu |
+| Rute | Isi | Aturan |
 |---|---|---|
-| 360px – 639px | 100% - 2rem | 1 kolom |
-| 640px – 1023px | min(100% - 2rem, 56rem) | 1-2 kolom sesuai section |
-| 1024px+ | min(100% - 2rem, 72rem) | 2 kolom (projects), 3 kolom (steps) |
+| `/game` | Dunia Game (tahap pengembangan, tidak mengganggu situs live) | v3 |
+| `/` (setelah lolos tes) | Dunia Game | v3 |
+| `/cepat` (setelah lolos tes) | Home lama | v2.1 |
+| `/about`, `/experience`, `/projects`, `/contact` | Mode Cepat, tidak diubah | v2.1 |
 
----
+Tautan langsung ke halaman lama tetap berfungsi, jadi pengunjung yang datang dari CV atau pesan tetap mendapat isi. Nama `/cepat` adalah usulan.
 
-## 6. Rancangan Tiap Halaman
+## 4. Palet
 
-### 6.1 Peta Halaman
+Warna lama dipertahankan, tujuh warna baru ditambahkan untuk membangun dunia. Semua didaftarkan di `@theme` pada `globals.css`.
 
-Situs multi-halaman. Navigasi memakai `next/link`, bukan anchor `#`.
+| Token | Nilai | Kelas Tailwind | Fungsi | Status |
+|---|---|---|---|---|
+| ink | #171313 | `text-ink`, `border-ink` | Garis tepi dan teks | lama |
+| bg | #EFEAE9 | `bg-bg` | Latar HUD dan panel | lama |
+| surface | #FFFFFF | `bg-surface` | Panel teks | lama |
+| sky | #CFE2FF | `bg-sky` | Langit, latar panel | lama |
+| sky-deep | #8FB8F0 | `bg-sky-deep` | Bayangan awan | baru |
+| mint | #CDEBD8 | `bg-mint` | Bukit jauh, latar panel | lama |
+| grass | #6FBF8E | `bg-grass` | Rumput | baru |
+| grass-dark | #3F8F63 | `bg-grass-dark` | Bayangan rumput | baru |
+| dirt | #B98B6A | `bg-dirt` | Tanah | baru |
+| dirt-dark | #8C5E45 | `bg-dirt-dark` | Bayangan tanah | baru |
+| butter | #FFEBA8 | `bg-butter` | Koin, matahari, latar panel | lama |
+| gold | #F2B83B | `bg-gold` | Bayangan koin, trofi | baru |
+| highlight | #FFC7D8 | `bg-highlight` | Aksen, hover, karakter | lama |
+| pink-deep | #E56B8F | `bg-pink-deep` | Nyawa, bayangan karakter | baru |
+| signal | #C8FF12 | `bg-signal` | Penanda 1UP, bukan teks | lama |
 
-| Rute | Isi |
+Aturan pemakaian:
+
+- Teks dan ikon selalu `ink`.
+- Latar panel boleh `surface`, `bg`, atau satu pastel (mint, sky, butter, highlight). Satu pastel per panel.
+- `grass`, `grass-dark`, `dirt`, `dirt-dark`, `sky-deep`, `gold`, dan `pink-deep` hanya untuk pemandangan dan sprite, bukan latar teks.
+- Kontras teks terhadap latar panel wajib minimal 4.5:1 dan diverifikasi saat implementasi.
+- Warna di luar tabel ini dilarang.
+
+## 5. Tipografi
+
+- **Font piksel:** Pixelify Sans via `next/font/google`, variabel `--font-pixel`. Hanya untuk judul level, HUD, dan tombol. Cek lisensi dan ketersediaannya sebelum dipakai.
+- **Font isi:** Montserrat 400 (600 untuk label) untuk semua teks di dalam panel.
+- Fallback font piksel: `ui-monospace, system-ui, sans-serif`.
+
+| Gaya | Font | Ukuran | Tinggi baris | Jarak huruf |
+|---|---|---|---|---|
+| game-title | piksel | clamp(2rem, 6vw, 3.5rem) | 1.1 | 0 |
+| level-title | piksel | clamp(1.5rem, 4vw, 2.25rem) | 1.2 | 0 |
+| hud | piksel | 0.875rem | 1.2 | 0 |
+| body | Montserrat | 1.0625rem | 1.6 | normal |
+| label | Montserrat | 0.78rem | normal | normal |
+
+Aturan: font piksel tidak dipakai untuk paragraf, dan ukuran tidak boleh di bawah 14px.
+
+## 6. Grid piksel, bentuk, dan jarak
+
+- Satuan piksel logis `--px`: 4px di desktop, 3px di HP (lebar di bawah 640px).
+- Sprite digambar di grid 16x16 (karakter) dan 32x32 (objek besar), diskalakan dengan `--px`.
+- Garis tepi 4px solid `ink` pada panel, tombol, dan input. Sudut persegi, tanpa radius.
+- **Bayangan keras** `4px 4px 0 var(--color-ink)`, tanpa blur. Ini satu-satunya shadow yang diizinkan di Dunia Game.
+- Panel: latar surface atau satu pastel, padding 1.5rem.
+- Tinggi dunia memakai `100svh`.
+- Rendering sprite: SVG `shape-rendering: crispEdges`, gambar `image-rendering: pixelated`.
+
+## 7. Dunia dan level
+
+### 7.1 Mekanik gulir
+
+- Wadah setinggi (4 level x 100svh) dengan kanvas `position: sticky` setinggi layar.
+- Kemajuan `p` (0 sampai 1) dihitung dari posisi gulir dan ditulis ke variabel CSS `--p` lewat `requestAnimationFrame`. Dunia digeser `translateX` mengikuti `--p`.
+- Gulir bawaan browser dipakai penuh, jadi roda mouse, sentuhan vertikal di HP, panah, PageDown, Space, Home, dan End langsung bekerja.
+- Tiap level punya jangkar `#level-1` sampai `#level-4`.
+
+### 7.2 Lapisan pemandangan
+
+| Lapisan | Kecepatan | Isi |
+|---|---|---|
+| Langit | 0.2x | Awan, matahari |
+| Bukit | 0.5x | Bukit jauh |
+| Tanah dan objek | 1x | Rumput, tanah, koin, papan, bendera |
+
+### 7.3 Level
+
+| Level | Nama | Isi panel | Pemandangan |
+|---|---|---|---|
+| 1 | Start | Judul "Sutan Akbar", subjudul "Mahasiswa D-IV Manajemen Informatika Polsri", papan "Mencari magang TI / SI", tombol Mulai dan Mode Cepat | Padang rumput, awan |
+| 2 | Skills | Pendidikan sebagai checkpoint, enam kelompok keterampilan dengan tingkat per alat, soft skill sebagai item power-up | Bukit dan blok |
+| 3 | Stage | Stage 1: Website Profil Jurusan MI Polsri. Stage 2: Nusantara Kopi. Pengalaman dari halaman Experience **[cek]** | Jembatan, gerbang stage |
+| 4 | Finish | Trofi Juara 1 PUBG Mobile, formulir kontak, Download CV, tautan profesional **[cek]** | Bendera finish |
+
+Rincian isi:
+
+- **Level 1:** papan "Mencari magang" menjawab kebutuhan status magang yang hilang dari Hero v2.1.
+- **Level 2:** Pendidikan: D-IV Manajemen Informatika Polsri (2024 sampai sekarang, IPK 3,55 / 4,00 hingga semester 4) dan SMA Negeri 10 Palembang (2021 sampai 2024). Kelompok keterampilan: Bahasa Pemrograman, Web dan Frontend, Mobile dan Database, Tools, Analisis dan Perancangan, Pendukung.
+- **Skala tingkat:** 1 Belajar, 2 Dasar, 3 Menengah, 4 Mahir, 5 Ahli. Digambar sebagai bintang piksel **dan** ditulis teks. Alat berlabel "belajar" bernilai 1 dan berlabel "dasar" bernilai 2. Tingkat selebihnya **wajib diisi pemilik sebelum rilis**.
+- **Level 3:** Stage 1 proyek mandiri 2026 (HTML, CSS, PHP Native, MySQL, tautan GitHub). Stage 2 proyek tim 4 orang untuk event SINTAK 2025 (HTML, CSS, JavaScript, Vercel, tautan demo). Klik kartu stage membuka dialog detail, Esc menutupnya.
+- **Level 4:** Juara 1 Lomba E-Sport PUBG Mobile 2022 (MADAGASCAR, HUT RI ke-77, OSIS SMA Negeri 10 Palembang). Formulir memakai Formspree. Download CV mengarah ke `/cv.pdf`.
+
+### 7.4 Karakter
+
+- Karakter pixel netral berwarna highlight dengan bayangan pink-deep, grid 16x16.
+- Satu frame diam dan empat frame jalan pada 8 fps. Berjalan hanya saat gulir bergerak dan berhenti 150ms setelah gulir berhenti.
+- Menghadap arah gulir.
+- Pada reduced-motion hanya satu frame statis.
+
+### 7.5 HUD
+
+- Posisi: tepi atas layar, selalu terlihat.
+- Isi: "LEVEL n/4", bar progres berupa blok piksel, tombol lompat 1 sampai 4, tautan Mode Cepat, tautan Download CV.
+- Di HP: ringkas, ikon dengan label singkat. Target sentuh minimal 44px.
+
+## 8. Komponen
+
+| Komponen | Aturan |
 |---|---|
-| `/` | Hero (h1, deskripsi, 2 tombol, statistik) → Project pilihan → Cara saya bekerja (3 kartu pastel) → Ajakan kontak + Download CV → Footer |
-| `/about` | Ringkasan, pendidikan, keterampilan (kartu per kelompok + pill), soft skill, prestasi |
-| `/experience` | Timeline vertikal: garis polos `bg-line`, ikon dalam lingkaran putih, kartu per item |
-| `/projects` | Grid 2 kolom kartu project; klik membuka modal detail (Esc/klik latar untuk menutup) |
-| `/contact` | Info kontak + form (Formspree), label eksplisit per input |
+| Tombol utama | Latar ink, teks surface, border 4px ink, bayangan keras. Hover: latar highlight dengan teks ink dan bergeser 2px. Tekan: bergeser 4px, bayangan hilang |
+| Tombol sekunder | Latar surface, teks ink, border dan bayangan sama |
+| Panel / dialog | Border 4px ink, latar surface atau satu pastel, bayangan keras |
+| Input form | Border 4px ink, latar surface, fokus berupa outline 4px ink dengan offset 2px |
+| Bintang tingkat | Sprite 8x8 terisi atau kosong, disertai teks tingkat |
+| Papan (sign) | Panel kecil di atas tiang piksel, isi satu kalimat |
+| Bar progres HUD | Maksimal 20 blok piksel, terisi sesuai `--p` |
 
-Aturan umum halaman dalam:
-- Judul halaman memakai `PageHeader` (h1, bobot 400, tanpa garis dekoratif).
-- Konten dibungkus `mx-auto max-w-6xl px-6`, jarak atas cukup untuk navbar fixed (`pt-32`; di HP perlu lebih besar karena navbar dua baris).
-- Data project hanya dari `lib/projects.ts` (satu sumber untuk Home dan /projects).
-- Footer: copyright (tahun ditulis manual karena Cache Components melarang `new Date()` di komponen server).
+Fokus keyboard: outline 4px solid ink dengan offset 2px, selalu terlihat.
 
----
+## 9. Gerak
 
-## 7. Motion
-
-### 7.1 Prinsip
-
-- Hanya **fade-in** dan **slide-up 8–12px**. Tidak ada bounce, rotate, scale berlebihan, atau animasi dekoratif.
-- Durasi: **200–300ms** dengan easing `ease-out`.
-- Semua motion hormati `prefers-reduced-motion: reduce` → nonaktifkan seluruh animasi.
-- Gunakan CSS transitions untuk hover/focus; gunakan Intersection Observer + class toggle untuk scroll-reveal.
-
-### 7.2 Scroll-Reveal (InterSectionObserver)
-
-```tsx
-// Pattern yang disarankan
-const el = useRef<HTMLDivElement>(null);
-const [visible, setVisible] = useState(false);
-
-useEffect(() => {
-  const observer = new IntersectionObserver(
-    ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-    { threshold: 0.15 }
-  );
-  if (el.current) observer.observe(el.current);
-  return () => observer.disconnect();
-}, []);
-```
-
-```css
-/* globals.css atau module */
-.reveal {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 250ms ease-out, transform 250ms ease-out;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    transition: none;
-    opacity: 1;
-    transform: none;
-  }
-}
-```
-
-### 7.3 Hover & Focus Transitions
-
-| Elemen | Transition |
-|---|---|
-| Tombol | `transition-opacity duration-200 hover:opacity-90 hover:scale-[1.02]` |
-| Kartu project / langkah / pastel | `transition-transform duration-300 ease-out hover:-translate-y-1` (naik 4px, tanpa shadow) |
-| Link nav | `transition-opacity duration-200 hover:opacity-70` |
-| Item skill grid | `transition-colors duration-200 hover:bg-[var(--color-bg)] hover:border-[var(--color-ink-muted)]` |
-
-> **DILARANG** menambahkan transition pada `padding`, `width`, atau `height` — dapat menyebabkan layout shift.
-
-### 7.4 Stagger pada Grid
-
-Untuk kartu project atau skill grid, tambahkan delay bertahap 50–80ms per item agar muncul berurutan:
-
-```tsx
-// Contoh: className dinamis berdasarkan index
-className={`reveal ${visible ? 'visible' : ''} ${visible ? `style="transition-delay: ${index * 60}ms"` : ''}`}
-```
-
----
-
-### 7.5 Efek Tambahan yang Diizinkan (Jalur B)
+Semua gerak wajib mati pada `prefers-reduced-motion: reduce`. Tidak ada elemen yang berkedip lebih dari 3 kali per detik.
 
 | Efek | Aturan |
 |---|---|
-| Reveal bergantian (stagger) | 60–80ms per item, `Reveal` (fade + geser 10px, 250ms) |
-| Hover kartu | Naik 4px, tanpa shadow, 300ms |
-| Hover gambar project | Zoom maksimal `scale-105` di dalam bingkai `overflow-hidden`, 300–400ms |
-| Hover tombol | Ganti warna isi (ink → highlight) atau opacity, 200ms |
-| Angka statistik Hero | Hitung naik dari 0, sekali saat terlihat, maksimal 1 detik |
-| Transisi antarhalaman | Fade pendek, maksimal 250ms |
-| Scroll progress | Garis tipis `bg-ink` di atas halaman |
-| Kartu mengipas (About: keterampilan; Home: Cara saya bekerja) | Saat masuk viewport, kartu miring maks 3° dan turun membentuk busur, kartu tengah naik dan membesar maks `scale-105`, 400ms. Hanya layar `md` ke atas. Tanpa glow, tanpa warna di luar palet. |
-| Intro nama (Home) | Layar `bg-bg` penuh, nama naik dari balik mask lalu layar bergeser ke atas, total maks 3,5 detik. Sekali per sesi, bisa dilewati klik atau Esc. Hanya palet, tanpa glow. |
+| Dunia bergeser | Mengikuti gulir langsung, tanpa easing tambahan |
+| Parallax | 0.2x, 0.5x, 1x |
+| Karakter berjalan | 4 frame pada 8 fps, hanya saat gulir bergerak |
+| Koin dan bintang berkedip | Maksimal 1 kali per detik |
+| Panel masuk | Geser 8px dan fade, 200ms, easing `steps(4)` |
+| Hover dan tekan tombol | Ganti warna isi dan geser 2px, 100ms |
+| Lompat level lewat HUD | Gulir halus maksimal 600ms, instan pada reduced-motion |
 
-Semua efek di atas wajib mati pada `prefers-reduced-motion: reduce` (§8.5).
-Marquee/teks berjalan BELUM disetujui; tambahkan ke tabel ini dulu sebelum dibuat.
+Intro nama v2.1 dihapus saat Dunia Game menjadi `/`. Layar Start adalah Level 1. Tidak ada overlay penuh.
 
----
+## 10. Responsif
 
-## 8. Aksesibilitas
-
-### 8.1 Kontras Warna
-
-Semua pasangan teks/latar harus mencapai **WCAG AA (4.5:1)** atau lebih tinggi. Lihat §2 untuk tabel rasio.
-
-| Kelas | Tujuan |
+| Lebar | Perilaku |
 |---|---|
-| `text-[var(--color-ink)]` | Teks utama — rasio 15.5:1 (AAA) |
-| `text-[var(--color-ink-muted)]` | Teks sekunder — rasio 10.8:1 (AAA) |
-| `text-[var(--color-white)]` pada background ink | CTA gelap — rasio 15.5:1 (AAA) |
-| ⚠️ `text-signal` (lime `#C8FF12`) | **DILARANG** untuk teks (rasio ~1.1:1, FAIL) |
+| 1024px ke atas | Dunia penuh, panel lebar maksimal 560px, `--px` 4px |
+| 640 sampai 1023px | Dunia penuh, panel lebar maksimal 480px, `--px` 4px |
+| Di bawah 640px (HP) | `--px` 3px, panel lebar 88vw, satu panel per layar, HUD ringkas |
+| Tinggi di bawah 480px | Pakai tampilan statis seperti reduced-motion |
 
-### 8.2 Focus Visible
+Titik uji wajib: 400px dan 1280px. Tidak boleh ada scroll horizontal pada body.
 
-Semua elemen interaktif harus menampilkan focus ring yang jelas:
+## 11. Aksesibilitas
 
-```css
-/* Pattern universal */
-:focus-visible {
-  outline: none;
-  ring: 2px solid var(--color-ink);
-  ring-offset: 2px;
-  ring-offset-color: var(--color-bg);
-}
-```
+- Semua isi berada di HTML nyata di dalam `<section aria-labelledby>`. Gambar latar dan sprite `aria-hidden="true"`.
+- Tab-stop pertama: skip link "Lewati ke Mode Cepat". Urutan fokus mengikuti urutan level.
+- Tidak ada jebakan keyboard. Dialog tertutup dengan Esc dan fokus kembali ke pemicunya.
+- Kontras teks minimal 4.5:1, ukuran minimal 14px, target sentuh minimal 44px.
+- Tingkat keterampilan selalu ditulis dengan teks, tidak hanya bintang.
+- Tidak ada suara otomatis. Tidak ada kedipan lebih dari 3 kali per detik.
+- Gulir tidak dibajak, jadi pengguna tetap dapat memakai alat bantu.
 
-- Tombol, link, input, dan kartu yang dapat difokuskan wajib memiliki `focus-visible` style.
-- Hindari `outline: none` tanpa pengganti ring.
+## 12. Mode Cepat dan tampilan statis
 
-### 8.3 Semantic HTML
+- Mode Cepat adalah halaman lama. Ia ditautkan dari HUD, dari skip link, dan dari tampilan statis.
+- **Tampilan statis** dipakai saat reduced-motion, tinggi layar di bawah 480px, atau JavaScript mati. Empat level disusun vertikal sebagai bagian biasa dengan latar piksel statis, dan isinya sama.
+- Isi level dirender di server, jadi konten tetap terbaca tanpa JavaScript.
 
-| Elemen | Penggunaan |
-|---|---|
-| `<nav>` | Navbar utama |
-| `<main>` | Konten utama halaman |
-| `<section>` | Setiap area (Hero, About, dll) dengan `aria-label` |
-| `<header>` | Optional, untuk hero |
-| `<footer>` | Footer |
-| `<h1>`–`<h3>` | Hierarki judul sesuai §3 |
-| `<ul>`/`<ol>` | List navigasi, skill, project |
-| `<form>` | Form kontak |
-| `<label>` | Setiap input form harus punya label tersambung via `htmlFor`/`id` |
+## 13. Teknis
 
-### 8.4 ARIA & Skip Link
+- Next.js 16 dengan Cache Components: tanpa `new Date()` di komponen server. Komponen interaktif memakai `"use client"` dan dibuat kecil.
+- **Tanpa library** game, 3D, atau animasi (tidak memakai three, gsap, zustand, atau framer-motion di Dunia Game). Cadangan arah 3D di branch `game-rich-upgrade` tidak dipakai.
+- Sprite berupa komponen React yang merender SVG dari peta piksel.
+- Aset level 3 dan 4 dimuat belakangan. Gambar project memakai `next/image` dengan ukuran tetap.
+- Target usulan: tambahan JavaScript Dunia Game di bawah 30 KB gzip, Lighthouse mobile performance minimal 80 dan accessibility minimal 95. Ukur dulu, lalu putuskan.
+- Struktur berkas usulan: `components/game/` (World, Character, Hud, `sprites/`, `levels/Level1` sampai `Level4`), `app/game/page.tsx`.
 
-- **Skip link:** Tautan tersembunyi di awal `<body>` yang muncul saat focus, mengarah ke `<main id="main-content">`.
-- **Landmark:** Pastikan setiap `<section>` memiliki `aria-label` yang deskriptif.
-- **Form:** Semua input wajib memiliki label eksplisit (bukan hanya `placeholder`).
+## 14. Dilarang di Dunia Game
 
-```tsx
-// Skip link pattern
-<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-[var(--color-ink)] text-[var(--color-white)] px-4 py-2 rounded">
-  Lewati ke konten utama
-</a>
-```
+- Bayangan dengan blur, glow, neon, atau gradient halus.
+- Warna di luar tabel palet.
+- Teks langsung di atas gambar, tanpa panel solid.
+- Font piksel untuk paragraf.
+- Elemen yang berkedip lebih dari 3 kali per detik.
+- Suara otomatis.
+- Membajak gulir (menahan atau mengubah arah roda mouse dan sentuhan).
+- Konten penting yang hanya ada di dalam gambar.
+- Efek mengetik pada dialog (teks muncul langsung).
+- Library 3D atau animasi tambahan.
 
-### 8.5 Reduced Motion
+## 15. Daftar periksa penerimaan
 
-Hormati `prefers-reduced-motion`:
+- [ ] Semua warna berasal dari tabel palet, tanpa hex lepas.
+- [ ] Tidak ada bayangan berblur dan tidak ada gradient.
+- [ ] Teks selalu di panel solid dengan kontras minimal 4.5:1.
+- [ ] Empat level tampil dan jangkar `#level-1` sampai `#level-4` bekerja.
+- [ ] Gulir mouse, sentuhan vertikal di HP, panah, PageDown, dan Space menggerakkan dunia.
+- [ ] HUD terlihat di setiap level, dengan Mode Cepat dan Download CV satu klik.
+- [ ] Reduced-motion aktif: tampilan statis tanpa animasi, isi sama.
+- [ ] JavaScript mati: isi tetap terbaca.
+- [ ] Diuji di 400px dan 1280px tanpa scroll horizontal.
+- [ ] Tingkat keterampilan semuanya sudah diisi pemilik dan ditulis dengan teks.
+- [ ] Formulir kontak, Download CV, dan tautan demo atau GitHub berfungsi.
+- [ ] Dialog stage tertutup dengan Esc.
+- [ ] Tidak ada elemen berkedip lebih dari 3 kali per detik.
+- [ ] `npx tsc --noEmit` dan `npm run build` lolos dengan semua rute.
 
-```css
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-```
+## 16. Keputusan
 
-### 8.6 Keyboard Navigation
+**Sudah diambil** (13 Oktober 2026):
 
-- Tab order mengikuti urutan dokumen (HTML source order).
-- Semua interaksi harus dapat dijangkau dengan keyboard.
-- Tidak ada hover-only interaction yang essential.
+- Seluruh situs menjadi Dunia Game (pilihan A) bergaya pixel 8-bit.
+- Mode Cepat dipertahankan permanen sampai ada keputusan lain.
+- Karakter pemain: pixel netral berwarna highlight.
+- Gulir vertikal bawaan browser menggerakkan dunia. Di HP, geser vertikal biasa dipakai, bukan geser horizontal. Ini **menggantikan** keterangan "geser kanan ke kiri" di PRD bagian 17.5.
+- Tanpa suara, dan dialog tanpa efek mengetik.
+- Intro nama lama dihapus saat Dunia Game menjadi `/`.
 
-### 8.7 Image Alt
+**Masih terbuka:**
 
-Setiap `<img>` wajib memiliki `alt` yang deskriptif. Gambar dekoratif gunakan `alt=""`.
-
----
-
-## 9. DILARANG
-
-### 9.1 Warna
-
-| Larangan | Alasan |
-|---|---|
-| Menggunakan `#C8FF12` (lime) untuk teks atau ikon | Kontras ~1.1:1, tidak readable |
-| Menambahkan warna di luar palet (ink, krem, putih, highlight, mint, sky, butter, signal) | Melanggar prinsip §1 poin 4 |
-| Memakai pastel (mint/sky/butter/highlight) untuk teks atau ikon | Kontras rendah; pastel hanya latar |
-| Menggabung dua pastel dalam satu kartu atau menggradasikannya | Menjaga tampilan tetap tenang |
-
-### 9.2 Tipografi
-
-| Larangan | Alasan |
-|---|---|
-| Menggunakan font selain Montserrat | Konsistensi brand |
-| Menggunakan bold (700+) untuk judul section | Hierarki harus dari ukuran, bukan bobot |
-| Menggunakan letter-spacing positif yang lebar | Judul harus rapat, bukan longgar |
-| Mengutip atau menyalin teks dari typesomething.co | Inspirasi prinsip saja, bukan konten |
-
-### 9.3 Motion & Animasi
-
-| Larangan | Alasan |
-|---|---|
-| Animasi dekoratif (floating, spinning, pulse tanpa fungsi) | Melanggar prinsip §1 poin 5 |
-| Transition pada `padding`, `width`, `height` | Menyebabkan layout shift |
-| Durasi > 400ms | Terlalu lambat untuk UX |
-| Gradient text, glow/neon, efek grid atau spotlight | Dekoratif, mengganggu keterbacaan |
-| Efek mengetik (typewriter), animated background, intro splash selain yang tercantum di §7.5 | Dekoratif, memperlambat |
-| Label kecil huruf kapital di atas judul (eyebrow) | Hierarki harus dari ukuran |
-| Shadow berat | Desain flat sesuai referensi |
-| Tidak menghormati `prefers-reduced-motion` | Aksesibilitas |
-
-### 9.4 Komponen & Layout
-
-| Larangan | Alasan |
-|---|---|
-| Menambah komponen di luar §5 tanpa persetujuan | Konsistensi desain system |
-| Menggunakan shadow (`shadow-lg`, dll) pada kartu | Desain flat sesuai referensi |
-| Mengubah radius default (24px untuk kartu, 12px untuk skill) | Konsistensi visual |
-| Menambahkan divider/garis horizontal berlebihan | Ruang napas lebih penting |
-
-### 9.5 Konten
-
-| Larangan | Alasan |
-|---|---|
-| Menyalin deskripsi project dari typesomething.co | Hak cipta |
-| Menambahkan section di luar urutan Hero → About → Experience → Projects → Contact | Flow baca terganggu |
-| Menggunakan foto/profile yang tidak relevan | Konten harus orisinal |
-
-### 9.6 Kode
-
-| Larangan | Alasan |
-|---|---|
-| Hardcode warna hex di komponen (selalu pakai class token) | Sulit dirawat |
-| Menggunakan `!important` secara sembarangan | Specificity conflict |
-| Menambahkan library animasi baru (GSAP, dll) tanpa izin | Berat bundle, berlebihan untuk pola sederhana |
-| Memakai Framer Motion di luar `Reveal`, modal Projects, form Contact, dan `ScrollProgress` | Library ini sudah terpasang; pemakaiannya dibatasi di komponen tersebut |
-
----
-
-## 10. Checklist Verifikasi
-
-### 10.1 Warna & Kontras
-
-- [ ] Semua teks menggunakan `--color-ink` atau `--color-ink-muted`
-- [ ] Tidak ada teks berwarna `#C8FF12` (lime)
-- [ ] Token signal dicadangkan (tidak ada titik status aktif)
-- [ ] Warna memakai class token (`bg-mint`, `text-ink`, dst.), tidak ada hardcode hex
-- [ ] Tidak ada blok `prefers-color-scheme: dark` (situs hanya mode terang)
-- [ ] Pastel hanya dipakai sebagai latar; teks di atasnya `text-ink`
-- [ ] Satu pastel per kartu/bagian, tanpa gradien
-
-### 10.2 Tipografi
-
-- [ ] Font Montserrat digunakan untuk semua teks (via `next/font/google`)
-- [ ] Tidak ada font lain yang diimpor
-- [ ] Judul section menggunakan bobot 400, bukan bold
-- [ ] Letter-spacing judul negatif (`-0.055em`, `-0.02em`, `-0.01em`)
-- [ ] Paragraf isi menggunakan `max-w-[65ch] text-pretty`
-
-### 10.3 Komponen
-
-- [ ] Navbar fixed top dengan backdrop-blur
-- [ ] Tombol primary: background ink, teks putih, radius 999px
-- [ ] Tombol secondary: background surface, border line, radius 999px
-- [ ] Pill status: dicadangkan/dihapus dari Hero dan Footer
-- [ ] Kartu project: radius 24px, aspect-[16/10] untuk gambar
-- [ ] Kartu langkah: bernomor 01, 02, 03
-- [ ] Grid skill: 3 kolom mobile, 6 kolom desktop
-- [ ] Form kontak: label eksplisit untuk setiap input
-
-### 10.4 Layout & Spasi
-
-- [ ] Kontainer max-width: min(100% - 2rem, 72rem)
-- [ ] Padding vertikal section: clamp(4rem, 8vw, 7rem)
-- [ ] Gap kartu: 1.5rem
-- [ ] Padding sisi: px-4 mobile, px-6 tablet+
-
-### 10.5 Responsif
-
-- [ ] Breakpoint 360px–639px: 1 kolom
-- [ ] Breakpoint 640px–1023px: 1–2 kolom
-- [ ] Breakpoint 1024px+: 2 kolom projects, 3 kolom steps
-
-### 10.6 Motion
-
-- [ ] Scroll-reveal memakai komponen `Reveal` (whileInView, sekali jalan)
-- [ ] Durasi 200–300ms dengan ease-out
-- [ ] `prefers-reduced-motion: reduce` dinonaktifkan
-- [ ] Tidak ada transition pada padding/width/height
-- [ ] Stagger delay 50–80ms pada grid items
-
-### 10.7 Aksesibilitas
-
-- [ ] Skip link tersedia dan terlihat saat focus
-- [ ] Semua section memiliki aria-label
-- [ ] Form input memiliki label tersambung via htmlFor/id
-- [ ] Fokus visible pada semua elemen interaktif
-- [ ] Semua img memiliki alt text
-- [ ] Semantic HTML (nav, main, section, footer)
-
-### 10.8 DILARANG — Review Akhir
-
-- [ ] Tidak ada warna di luar palet §1 poin 4
-- [ ] Tidak ada shadow pada kartu
-- [ ] Tidak ada animasi dekoratif
-- [ ] Tidak ada teks dari typesomething.co
-- [ ] Tidak ada library animasi baru (Framer Motion hanya di komponen yang diizinkan §9.6)
-- [ ] Tautan navigasi memakai `Link` ke rute, bukan `#anchor`
-- [ ] Tidak ada gradient text, glow, spotlight, tilt, efek mengetik
+- Avatar Sutan menggantikan karakter netral atau tidak.
+- Tingkat keterampilan per alat (diisi pemilik).
+- Lisensi dan ketersediaan Pixelify Sans.
+- Isi halaman Experience dan tautan profesional di Level 3 dan 4 **[cek]**.
+- Nama rute Mode Cepat (`/cepat` usulan).
+- Apakah halaman lama kelak dihapus.
