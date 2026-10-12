@@ -9,7 +9,7 @@
   background: var(--color-bg, #efeae9);
   cursor: pointer;
   /* layar bergeser ke atas setelah nama terbaca (mulai 1700ms, durasi 700ms) */
-  animation: intro-overlay-out 1700ms cubic-bezier(0.76, 0, 0.24, 1) 1700ms
+  animation: intro-overlay-out 700ms cubic-bezier(0.76, 0, 0.24, 1) 1700ms
     forwards;
 }
 
