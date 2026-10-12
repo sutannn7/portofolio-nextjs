@@ -6,7 +6,7 @@
 
 /* Tailwind v4: token didaftarkan sekali di sini, otomatis jadi class utility */
 @theme {
-  /* Warna — Portfolio */
+  /* Warna */
   --color-bg: #EFEAE9;
   --color-surface: #FFFFFF;
   --color-ink: #171313;
@@ -17,18 +17,6 @@
   --color-sky: #CFE2FF;
   --color-butter: #FFEBA8;
   --color-signal: #C8FF12;    /* TITIK STATUS SAJA, BUKAN TEKS */
-
-  /* Warna — Pixel Game (DESIGN.md v3 §2) */
-  --pixel-dark: #0B0014;      /* hitam biru gelap */
-  --pixel-purple: #2C1B47;    /* ungu gelap */
-  --pixel-magenta: #7D3C98;   /* magenta */
-  --pixel-cyan: #00D9FF;      /* cyan terang */
-  --pixel-lime: #00FF41;      /* lime terang */
-  --pixel-yellow: #FFFF00;    /* kuning murni */
-  --pixel-pink: #FF006E;      /* pink neon */
-
-  /* Pixel unit (8-bit grid base) */
-  --px: 8px;
 
   /* Radius */
   --radius-card: 24px;
@@ -48,6 +36,79 @@
   --text-body: 1.0625rem;
   --text-body--line-height: 1.6;
   --text-label: 0.78rem;
+}
+
+/* Font Montserrat dari next/font (variabel diset di layout.tsx) */
+@theme inline {
+  --font-montserrat: var(--font-montserrat);
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-weight: 400;
+}
+
+/* =========================================================
+   Reveal animation (DESIGN.md bagian 7.2)
+   ========================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 250ms ease-out, transform 250ms ease-out;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-page-in {
+  animation: page-in 250ms ease-out backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-page-in {
+    animation: none;
+  }
+}
+
+/* Kipas kartu keterampilan About (DESIGN.md 7.5) */
+@media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {
+  .fan-card {
+    transition: transform 400ms ease-out, translate 300ms ease-out;
+  }
+  [data-fan="on"] .fan-l {
+    transform: translateY(12px) rotate(-3deg);
+  }
+  [data-fan="on"] .fan-m {
+    transform: translateY(-8px) scale(1.05);
+  }
+  [data-fan="on"] .fan-r {
+    transform: translateY(12px) rotate(3deg);
+  }
 }
 
 /* Font Montserrat dari next/font (variabel diset di layout.tsx) */
