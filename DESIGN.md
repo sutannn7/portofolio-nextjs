@@ -159,7 +159,7 @@ body {
 | **Focus** | `outline-none ring-2 ring-[var(--color-ink)] ring-offset-1` |
 | **Disabled** | `opacity-50` |
 
-Badge status di atas judul Hero diizinkan dan tidak dihitung sebagai label kecil di atas judul.
+Badge status di atas judul Hero dihapus; token signal dicadangkan.
 
 ### 5.4 Kartu Project (Gambar Besar di Atas)
 
@@ -256,7 +256,7 @@ Situs multi-halaman. Navigasi memakai `next/link`, bukan anchor `#`.
 
 | Rute | Isi |
 |---|---|
-| `/` | Hero (pill status, h1, deskripsi, 2 tombol, statistik) → Project pilihan → Cara saya bekerja (3 kartu pastel) → Ajakan kontak + Download CV → Footer |
+| `/` | Hero (h1, deskripsi, 2 tombol, statistik) → Project pilihan → Cara saya bekerja (3 kartu pastel) → Ajakan kontak + Download CV → Footer |
 | `/about` | Ringkasan, pendidikan, keterampilan (kartu per kelompok + pill), soft skill, prestasi |
 | `/experience` | Timeline vertikal: garis polos `bg-line`, ikon dalam lingkaran putih, kartu per item |
 | `/projects` | Grid 2 kolom kartu project; klik membuka modal detail (Esc/klik latar untuk menutup) |
@@ -266,7 +266,7 @@ Aturan umum halaman dalam:
 - Judul halaman memakai `PageHeader` (h1, bobot 400, tanpa garis dekoratif).
 - Konten dibungkus `mx-auto max-w-6xl px-6`, jarak atas cukup untuk navbar fixed (`pt-32`; di HP perlu lebih besar karena navbar dua baris).
 - Data project hanya dari `lib/projects.ts` (satu sumber untuk Home dan /projects).
-- Footer: copyright (tahun ditulis manual karena Cache Components melarang `new Date()` di komponen server) dan titik status.
+- Footer: copyright (tahun ditulis manual karena Cache Components melarang `new Date()` di komponen server).
 
 ---
 
@@ -351,7 +351,7 @@ className={`reveal ${visible ? 'visible' : ''} ${visible ? `style="transition-de
 | Transisi antarhalaman | Fade pendek, maksimal 250ms |
 | Scroll progress | Garis tipis `bg-ink` di atas halaman |
 | Kartu mengipas (About: keterampilan; Home: Cara saya bekerja) | Saat masuk viewport, kartu miring maks 3° dan turun membentuk busur, kartu tengah naik dan membesar maks `scale-105`, 400ms. Hanya layar `md` ke atas. Tanpa glow, tanpa warna di luar palet. |
-| Intro nama (Home) | Layar `bg-bg` penuh, nama naik dari balik mask lalu layar bergeser ke atas, total maks 1,5 detik. Sekali per sesi, bisa dilewati klik atau Esc. Hanya palet, tanpa glow. |
+| Intro nama (Home) | Layar `bg-bg` penuh, nama naik dari balik mask lalu layar bergeser ke atas, total maks 3,5 detik. Sekali per sesi, bisa dilewati klik atau Esc. Hanya palet, tanpa glow. |
 
 Semua efek di atas wajib mati pada `prefers-reduced-motion: reduce` (§8.5).
 Marquee/teks berjalan BELUM disetujui; tambahkan ke tabel ini dulu sebelum dibuat.
@@ -509,7 +509,7 @@ Setiap `<img>` wajib memiliki `alt` yang deskriptif. Gambar dekoratif gunakan `a
 
 - [ ] Semua teks menggunakan `--color-ink` atau `--color-ink-muted`
 - [ ] Tidak ada teks berwarna `#C8FF12` (lime)
-- [ ] Titik status memakai `bg-signal` (lime) atau `bg-highlight` (pink), tidak dicampur dalam satu halaman
+- [ ] Token signal dicadangkan (tidak ada titik status aktif)
 - [ ] Warna memakai class token (`bg-mint`, `text-ink`, dst.), tidak ada hardcode hex
 - [ ] Tidak ada blok `prefers-color-scheme: dark` (situs hanya mode terang)
 - [ ] Pastel hanya dipakai sebagai latar; teks di atasnya `text-ink`
@@ -528,7 +528,7 @@ Setiap `<img>` wajib memiliki `alt` yang deskriptif. Gambar dekoratif gunakan `a
 - [ ] Navbar fixed top dengan backdrop-blur
 - [ ] Tombol primary: background ink, teks putih, radius 999px
 - [ ] Tombol secondary: background surface, border line, radius 999px
-- [ ] Pill status: inline-flex, gap-2, radius 999px, titik pink
+- [ ] Pill status: dicadangkan/dihapus dari Hero dan Footer
 - [ ] Kartu project: radius 24px, aspect-[16/10] untuk gambar
 - [ ] Kartu langkah: bernomor 01, 02, 03
 - [ ] Grid skill: 3 kolom mobile, 6 kolom desktop
